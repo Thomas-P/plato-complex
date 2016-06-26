@@ -39,7 +39,7 @@ import {WithStatement} from "./rules/WithStatement";
  * Created by ThomasP on 25.06.2016.
  */
 // build rule set
-let ruleSet:IRuleSet = EsPrimaRuleSet();
+let ruleSet:IRuleSet = new EsPrimaRuleSet();
 /**
  * Export the rule set of es prima as 'esPrimaRules'
  */

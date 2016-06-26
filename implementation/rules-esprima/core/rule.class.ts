@@ -3,6 +3,7 @@ import {Identifier} from "../rules/Identifier";
 import {Literal} from "../rules/Literal";
 import {IRule} from "../../../lib/rule/rule.interface";
 import {IRuleResult} from "../../../lib/rule/rule-result.interface";
+import {getPropertyNameHelper} from "./propertyNameHelper";
 /**
  * Created by ThomasP on 25.06.2016.
  */
@@ -59,15 +60,5 @@ export abstract class EsPrimaRule implements IRule {
      * @param node
      * @returns {string}
      */
-    static getPropertyNameHelper(node: ESTree.Node) {
-        let name: string;
-        if (node.type === 'MemberExpression') {
-            name = MemberExpression.getPropertyName(<ESTree.MemberExpression>node);
-        } else if (node.type === 'Identifier') {
-            name = Identifier.getPropertyName(<ESTree.Identifier>node);
-        } else if (node.type === 'Literal') {
-            name = Literal.getPropertyName(<ESTree.Literal>node);
-        }
-        return name;
-    }
+    static getPropertyNameHelper = getPropertyNameHelper;
 }

@@ -1,5 +1,6 @@
 import {EsPrimaRule} from "../core/rule.class";
 import {IRuleResult} from "../../../lib/rule/rule-result.interface";
+import {getIdentifierExpressionNameHelper} from "../core/propertyNameHelper";
 
 /**
  * Created by ThomasP on 22.06.2016.
@@ -17,12 +18,7 @@ export class Identifier extends EsPrimaRule {
     }
 
 
-    static getPropertyName(node: ESTree.Identifier): string {
-        if (node.type !== 'Identifier') {
-            return;
-        }
-        return node.name;
-    }
+    static getPropertyName = getIdentifierExpressionNameHelper;
 }
 /*
 'use strict';

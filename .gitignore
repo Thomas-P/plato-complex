@@ -44,9 +44,9 @@ typings
 .idea/
 
 #
-bin/*.js*
-lib/*.js*
-implementation/*.js*
+bin/**/*.js*
+lib/**/*.js*
+implementation/**/*.js*
 
 
 .play

@@ -1,5 +1,6 @@
 import {EsPrimaRule} from "../core/rule.class";
 import {IRuleResult} from "../../../lib/rule/rule-result.interface";
+import {getMemberExpressionNameHelper} from "../core/propertyNameHelper";
 
 /**
  * Created by ThomasP on 22.06.2016.
@@ -26,17 +27,7 @@ export class MemberExpression extends EsPrimaRule {
      * @param node
      * @returns {undefined}
      */
-    static getPropertyName(node: ESTree.MemberExpression): string {
-        if (node.type !== 'MemberExpression') {
-            return;
-        }
-        let pre: string = EsPrimaRule.getPropertyNameHelper(node.object);
-        let post: string = EsPrimaRule.getPropertyNameHelper(node.property);
-        if (node.computed) {
-            return `${pre}[${post}]`;
-        }
-        return `${pre}.${post}`;
-    }
+    static getPropertyName = getMemberExpressionNameHelper;
 }
 /*
 'use strict';
