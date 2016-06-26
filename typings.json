@@ -1,0 +1,16 @@
+{
+  "devDependencies": {
+    "chai": "registry:npm/chai#3.5.0+20160415060238"
+  },
+  "globalDevDependencies": {
+    "mocha": "registry:dt/mocha#2.2.5+20160619032855"
+  },
+  "globalDependencies": {
+    "esprima": "registry:dt/esprima#2.1.0+20160621120642",
+    "estree": "registry:dt/estree#0.0.0+20160317120654",
+    "node": "registry:env/node#6.0.0+20160622202520",
+    "rx": "registry:dt/rx#0.0.0+20160317120654",
+    "rx-lite": "registry:dt/rx-lite#0.0.0+20160623134935",
+    "rx.all": "registry:dt/rx.all#2.2.28+20160316155526"
+  }
+}
