@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "tsd": "./node_modules/.bin/tsd install ",
+    "typings": "./node_modules/.bin/typings install ",
     "tsc": "./node_modules/.bin/tsc",
-    "pretest": "npm run tsd && npm run tsc",
+    "pretest": "npm run typings && npm run tsc",
     "test": "npm run test:unit && npm run test:nyc && npm run test:nyc:report npm run colveralls",
     "test:nyc": "./node_modules/.bin/nyc npm run test:unit",
     "test:nyc:report": "./node_modules/.bin/nyc report --reporter=text-lcov",
