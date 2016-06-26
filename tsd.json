@@ -1,0 +1,24 @@
+{
+  "version": "v4",
+  "repo": "borisyankov/DefinitelyTyped",
+  "ref": "master",
+  "path": "typings",
+  "bundle": "typings/tsd.d.ts",
+  "installed": {
+    "rx/rx.d.ts": {
+      "commit": "830586ef556be5244f3711587b0c774ddfd959c4"
+    },
+    "rx/rx-lite.d.ts": {
+      "commit": "830586ef556be5244f3711587b0c774ddfd959c4"
+    },
+    "node/node.d.ts": {
+      "commit": "830586ef556be5244f3711587b0c774ddfd959c4"
+    },
+    "esprima/esprima.d.ts": {
+      "commit": "830586ef556be5244f3711587b0c774ddfd959c4"
+    },
+    "estree/estree.d.ts": {
+      "commit": "830586ef556be5244f3711587b0c774ddfd959c4"
+    }
+  }
+}
