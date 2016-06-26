@@ -29,7 +29,7 @@ export abstract class EsPrimaRule implements IRule {
      * @returns {Array<Statement>}
      */
     protected getNodesToVisit(node: ESTree.Node, ...names: Array<string>): Array<ESTree.Node> {
-        if (!node) {
+        if (!node || !Array.isArray(names)) {
             return [];
         }
         return names
