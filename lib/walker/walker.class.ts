@@ -16,7 +16,7 @@ export class Walker<T, U> implements IWalker {
      * @param program
      * @returns {Observable<IWalkerCommand>}
      */
-    walk(program:T):Rx.Observable<IWalkerCommand> {
+    walk(program:T):Rx.Observable<IWalkerCommand<T>> {
         return this.visitNode(program).filter((command) => !!command);
     }
 
@@ -27,11 +27,11 @@ export class Walker<T, U> implements IWalker {
      * @param assignedName
      * @returns {Observable<IWalkerCommand>}
      */
-    private visitNode(node:T, assignedName?:string):Rx.Observable<IWalkerCommand> {
+    private visitNode(node:T, assignedName?:string):Rx.Observable<IWalkerCommand<T>> {
         if (!node || typeof node !== 'object') {
             return;
         }
-        let result:IRuleResult = this.$rules.processNode(node, this.$settings, assignedName);
+        let result:IRuleResult<T> = this.$rules.processNode(node, this.$settings, assignedName);
         if (!result) {
             return Rx.Observer.throw(new Error('Could not get a result for node' + node.toString()));
         }
@@ -65,7 +65,7 @@ export class Walker<T, U> implements IWalker {
      * @param node
      * @param assignedName
      */
-    private visitNodeList(node:Array<T>, assignedName?:string):Rx.Observable<IWalkerCommand> {
+    private visitNodeList(node:Array<T>, assignedName?:string):Rx.Observable<IWalkerCommand<T>> {
         return Rx.Observer
             .fromArray(node)
             .delay(0)

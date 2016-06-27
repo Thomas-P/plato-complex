@@ -40,6 +40,9 @@ export function getMemberExpressionNameHelper(node: ESTree.MemberExpression): st
 
 
 export function getPropertyNameHelper(node: ESTree.Node): string {
+    if (!node) {
+        return;
+    }
     let name: string;
     if (node.type === 'MemberExpression') {
         name = getMemberExpressionNameHelper(<ESTree.MemberExpression>node);

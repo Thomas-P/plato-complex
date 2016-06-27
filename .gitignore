@@ -50,3 +50,5 @@ implementation/**/*.js*
 
 
 .play
+.nyc_output
+run*

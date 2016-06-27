@@ -9,6 +9,9 @@ import {getIdentifierExpressionNameHelper} from "../core/propertyNameHelper";
 
 export class Identifier extends EsPrimaRule {
     processNode<U>(node:ESTree.Identifier, settings:U, assignedName?:string):IRuleResult<ESTree.Node> {
+        if (!node) {
+            return;
+        }
         return {
             lloc: 0,
             cyclomatic: 0,

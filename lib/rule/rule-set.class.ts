@@ -6,7 +6,7 @@ import {IRuleResult} from "./rule-result.interface";
  */
 
 
-export abstract class RuleSet implements IRuleSet{
+export abstract class RuleSet implements IRuleSet {
     private $ruleStore: Map<string, IRule> = new Map();
 
 
@@ -33,5 +33,5 @@ export abstract class RuleSet implements IRuleSet{
     }
 
 
-    abstract processNode<T, U>(node: T, settings: U, assignedName?: string): IRuleResult;
+    abstract processNode<T, U>(node: T, settings: U, assignedName?: string): IRuleResult<T>;
 }

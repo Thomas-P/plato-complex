@@ -1,5 +1,6 @@
 import {EsPrimaRule} from "../core/rule.class";
 import {IRuleResult} from "../../../lib/rule/rule-result.interface";
+import {getDeepEntry} from "../../../lib/helper/getDeepEntry";
 
 /**
  * Created by ThomasP on 22.06.2016.
@@ -8,9 +9,12 @@ import {IRuleResult} from "../../../lib/rule/rule-result.interface";
 
 export class ForInStatement extends EsPrimaRule {
     processNode<U extends { forIn: boolean }>(node:ESTree.ForInStatement, settings:U, assignedName?:string):IRuleResult<ESTree.Node> {
+        if (!node) {
+            return;
+        }
         return {
             lloc: 1,
-            cyclomatic: settings && settings.forIn ?  1 : 0,
+            cyclomatic: getDeepEntry(settings, 'forIn') ?  1 : 0,
             operators: ['forIn'],
             nextNodes: this.getNodesToVisit(node, 'left', 'right', 'body')
         }

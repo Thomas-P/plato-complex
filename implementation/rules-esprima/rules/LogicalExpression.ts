@@ -1,5 +1,6 @@
 import {EsPrimaRule} from "../core/rule.class";
 import {IRuleResult} from "../../../lib/rule/rule-result.interface";
+import {ISettings} from "../../../lib/deprecated/settings.interface";
 
 /**
  * Created by ThomasP on 22.06.2016.
@@ -7,7 +8,7 @@ import {IRuleResult} from "../../../lib/rule/rule-result.interface";
 
 
 export class LogicalExpression extends EsPrimaRule {
-    processNode<U>(node:ESTree.LogicalExpression, settings:U, assignedName?:string):IRuleResult<ESTree.Node> {
+    processNode<U extends ISettings>(node:ESTree.LogicalExpression, settings:U, assignedName?:string):IRuleResult<ESTree.Node> {
         let isAnd: boolean = node.operator === '&&';
         let isOr: boolean = node.operator === '||';
 

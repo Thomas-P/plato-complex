@@ -28,5 +28,5 @@ export interface IRuleSet {
      * @param name
      */
     hasRule(name: string): boolean;
-    processNode<T, U>(node: T, settings: U, assignedName?: string): IRuleResult;
+    processNode<T, U>(node: T, settings: U, assignedName?: string): IRuleResult<T>;
 }

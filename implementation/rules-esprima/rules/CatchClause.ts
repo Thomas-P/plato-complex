@@ -1,5 +1,6 @@
 import {EsPrimaRule} from "../core/rule.class";
 import {IRuleResult} from "../../../lib/rule/rule-result.interface";
+import {getDeepEntry} from "../../../lib/helper/getDeepEntry";
 
 /**
  * Created by ThomasP on 22.06.2016.
@@ -8,9 +9,12 @@ import {IRuleResult} from "../../../lib/rule/rule-result.interface";
 
 export class CatchClause extends EsPrimaRule {
     processNode<U extends { tryCatch: boolean }>(node:ESTree.CatchClause, settings:U, assignedName?:string):IRuleResult<ESTree.Node> {
+        if (!node) {
+            return;
+        }
         return {
             lloc: 1,
-            cyclomatic: settings && settings.tryCatch ? 1: 0,
+            cyclomatic: getDeepEntry(settings, 'tryCatch') ? 1: 0,
             operators: ['catch'],
             nextNodes: this.getNodesToVisit(node, 'param', 'body')
         }

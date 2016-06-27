@@ -14,7 +14,7 @@ export class EsPrimaRuleSet extends RuleSet {
      * @param assignedName
      * @returns {IRuleResult<ESTree.Node>}
      */
-    processNode<U>(node: ESTree.Node, settings:U, assignedName?:string):IRuleResult {
+    processNode<U>(node: ESTree.Node, settings:U, assignedName?:string):IRuleResult<ESTree.Node> {
         // no rule
         if (!node || this.hasRule(node.type) === false) {
             return;

@@ -8,6 +8,9 @@ import {IRuleResult} from "../../../lib/rule/rule-result.interface";
 
 export class ContinueStatement extends EsPrimaRule {
     processNode<U>(node:ESTree.ContinueStatement, settings:U, assignedName?:string):IRuleResult<ESTree.Node> {
+        if (!node) {
+            return;
+        }
         return {
             lloc: 1,
             cyclomatic: 0,

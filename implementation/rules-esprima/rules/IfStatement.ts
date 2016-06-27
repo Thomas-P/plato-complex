@@ -1,5 +1,6 @@
 import {EsPrimaRule} from "../core/rule.class";
 import {IRuleResult} from "../../../lib/rule/rule-result.interface";
+import {getDeepEntry} from "../../../lib/helper/getDeepEntry";
 
 /**
  * Created by ThomasP on 22.06.2016.
@@ -8,8 +9,11 @@ import {IRuleResult} from "../../../lib/rule/rule-result.interface";
 
 export class IfStatement extends EsPrimaRule {
     processNode<U>(node:ESTree.IfStatement, settings:U, assignedName?:string):IRuleResult<ESTree.Node> {
+        if (!node) {
+            return;
+        }
         let result:IRuleResult<ESTree.Node> = {
-            lloc: node.alternate ? 2 : 1,
+            lloc: getDeepEntry(node, 'alternate') ? 2 : 1,
             cyclomatic: 1,
             operators: ['if'],
             nextNodes: this.getNodesToVisit(node, 'test', 'consequent', 'alternate'),

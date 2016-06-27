@@ -8,6 +8,9 @@ import {IRuleResult} from "../../../lib/rule/rule-result.interface";
 
 export class BlockStatement extends EsPrimaRule {
     processNode<U>(node:ESTree.BlockStatement, settings:U, assignedName?:string):IRuleResult<ESTree.Node> {
+        if (!node) {
+            return;
+        }
         return {
             lloc: 0,
             cyclomatic: 0,

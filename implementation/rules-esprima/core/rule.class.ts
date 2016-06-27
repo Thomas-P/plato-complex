@@ -4,6 +4,7 @@ import {Literal} from "../rules/Literal";
 import {IRule} from "../../../lib/rule/rule.interface";
 import {IRuleResult} from "../../../lib/rule/rule-result.interface";
 import {getPropertyNameHelper} from "./propertyNameHelper";
+import {type} from "os";
 /**
  * Created by ThomasP on 25.06.2016.
  */
@@ -47,6 +48,9 @@ export abstract class EsPrimaRule implements IRule {
     static safeName(object, defaultName?: string): string {
         if (object && typeof object.name === 'string' && object.name.length) {
             return object.name;
+        }
+        if (typeof object === 'string' && object.length) {
+            return object;
         }
         if (typeof defaultName === 'string' && defaultName.length) {
             return defaultName;

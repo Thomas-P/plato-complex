@@ -7,10 +7,10 @@
     "typings": "./node_modules/.bin/typings install ",
     "tsc": "./node_modules/.bin/tsc",
     "pretest": "npm run typings && npm run tsc",
-    "test": "npm run test:unit && npm run test:nyc && npm run test:nyc:report npm run colveralls",
-    "test:nyc": "./node_modules/.bin/nyc npm run test:unit",
+    "test": "npm run mocha && npm run test:nyc && npm run test:nyc:report npm run colveralls",
+    "test:nyc": "./node_modules/.bin/nyc npm run mocha",
     "test:nyc:report": "./node_modules/.bin/nyc report --reporter=text-lcov",
-    "test:unit": "./node_modules/.bin/mocha --ui tdd --reporter spec --colors --recursive",
+    "mocha": "./node_modules/.bin/mocha --ui tdd --reporter spec --colors --recursive",
     "coveralls": "npm run test:nyc | ./node_modules/.bin/coveralls"
   },
   "repository": {
@@ -30,9 +30,16 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "coveralls": "^2.11.9",
+    "deep-equal": "^1.0.1",
     "mocha": "^2.5.3",
     "nyc": "^6.6.1",
     "typescript": "^1.8.10",
     "typings": "^1.3.0"
+  },
+  "nyc": {
+    "include": [
+      "lib/**/*.js",
+      "implementation/**/*.js"
+    ]
   }
 }

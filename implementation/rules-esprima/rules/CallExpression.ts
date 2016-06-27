@@ -1,5 +1,6 @@
 import {EsPrimaRule} from "../core/rule.class";
 import {IRuleResult} from "../../../lib/rule/rule-result.interface";
+import {getDeepEntry} from "../../../lib/helper/getDeepEntry";
 
 /**
  * Created by ThomasP on 22.06.2016.
@@ -8,8 +9,11 @@ import {IRuleResult} from "../../../lib/rule/rule-result.interface";
 
 export class CallExpression extends EsPrimaRule {
     processNode<U>(node:ESTree.CallExpression, settings:U, assignedName?:string):IRuleResult<ESTree.Node> {
+        if (!node) {
+            return;
+        }
         return {
-            lloc: node.callee.type === 'FunctionExpression' ? 1 : 0,
+            lloc: getDeepEntry(node, 'callee', 'type') === 'FunctionExpression' ? 1 : 0,
             cyclomatic: 0,
             operators: ['()'],
             nextNodes: this.getNodesToVisit(node, 'arguments', 'callee')

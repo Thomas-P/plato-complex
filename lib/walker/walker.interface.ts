@@ -10,7 +10,7 @@ export enum WalkerCommand {
 
 export interface IWalkerCommand<T> {
     cmd: WalkerCommand;
-    data: T;
+    data: string|IRuleResult<T>;
 }
 
 
@@ -44,7 +44,7 @@ export interface IWalker {
      * @param program
      * @return Observable<IWalkerCommand>
      */
-    walk<T, U>(program: T): Observable<IWalkerCommand>;
+    walk<T, U>(program: T): Observable<IWalkerCommand<U>>;
 
     /**
      * The walker need Rules for walking through all nodes. The default rule set is

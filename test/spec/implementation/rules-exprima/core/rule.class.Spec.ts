@@ -148,7 +148,7 @@ describe('class EsPrimaRule', () => {
         });
 
         it('should give the right nodes back', () => {
-            let result = test['getNodesToVisit']();
+            let result = test['getNodesToVisit'](undefined);
             assert.isArray(result, 'should be an array');
             assert.lengthOf(result, 0, 'should have 0 entries');
 
@@ -175,10 +175,6 @@ describe('class EsPrimaRule', () => {
             assert.deepEqual(expression.left, result[0], 'expression.left should equal with given expression -> left');
             assert.deepEqual(expression.right, result[1], 'expression.right should equal with given expression -> right');
 
-
-
         });
-
-
     });
 });

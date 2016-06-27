@@ -1,5 +1,6 @@
 import {EsPrimaRule} from "../core/rule.class";
 import {IRuleResult} from "../../../lib/rule/rule-result.interface";
+import {getLiteralExpressionNameHelper} from "../core/propertyNameHelper";
 
 /**
  * Created by ThomasP on 22.06.2016.
@@ -20,20 +21,7 @@ export class Literal extends EsPrimaRule {
      * @param node
      * @returns {string}
      */
-    static getPropertyName(node: ESTree.Literal): string {
-        if (node.type !== 'Literal') {
-            return;
-        }
-        let value: string;
-        if (typeof node.value === 'number') {
-            value = String(node.value);
-        } else if (typeof node.value === 'string') {
-            value = `'${node.value}'`;
-        } else {
-            value = String(node.value);
-        }
-        return `[${value}]`;
-    }
+    static getPropertyName = getLiteralExpressionNameHelper;
 
 }
 

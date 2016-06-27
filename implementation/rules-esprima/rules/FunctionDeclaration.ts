@@ -1,5 +1,7 @@
 import {EsPrimaRule} from "../core/rule.class";
 import {IRuleResult} from "../../../lib/rule/rule-result.interface";
+import {getDeepEntry} from "../../../lib/helper/getDeepEntry";
+import {getPropertyNameHelper} from "../core/propertyNameHelper";
 
 /**
  * Created by ThomasP on 22.06.2016.
@@ -8,7 +10,10 @@ import {IRuleResult} from "../../../lib/rule/rule-result.interface";
 
 export class FunctionDeclaration extends EsPrimaRule {
     processNode<U>(node:ESTree.FunctionDeclaration, settings:U, assignedName?:string):IRuleResult<ESTree.Node> {
-        let name = EsPrimaRule.getPropertyNameHelper(node.id);
+        if (!node) {
+            return;
+        }
+        let name = getPropertyNameHelper(<ESTree.Node>getDeepEntry(node, 'id'));
         return {
             lloc: 1,
             cyclomatic: 0,
