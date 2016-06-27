@@ -1,10 +1,11 @@
+import {getDeepEntry} from "../../../lib/helper/getDeepEntry";
 /**
  * Created by ThomasP on 26.06.2016.
  */
 
 
 export function getLiteralExpressionNameHelper(node: ESTree.Literal): string {
-    if (node.type !== 'Literal') {
+    if (getDeepEntry(node, 'type') !== 'Literal') {
         return;
     }
     let value: string;
@@ -15,19 +16,19 @@ export function getLiteralExpressionNameHelper(node: ESTree.Literal): string {
     } else {
         value = String(node.value);
     }
-    return `[${value}]`;
+    return `${value}`;
 }
 
 
 export function getIdentifierExpressionNameHelper(node: ESTree.Identifier): string {
-    if (node.type !== 'Identifier') {
+    if (getDeepEntry(node, 'type') !== 'Identifier') {
         return;
     }
     return node.name;
 }
 
 export function getMemberExpressionNameHelper(node: ESTree.MemberExpression): string {
-    if (!node || node.type !== 'MemberExpression') {
+    if (getDeepEntry(node, 'type') !== 'MemberExpression') {
         return;
     }
     let pre: string = getPropertyNameHelper(node.object);

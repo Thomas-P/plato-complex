@@ -9,6 +9,9 @@ import {getLiteralExpressionNameHelper} from "../core/propertyNameHelper";
 
 export class Literal extends EsPrimaRule {
     processNode<U>(node:ESTree.Literal, settings:U, assignedName?:string):IRuleResult<ESTree.Node> {
+        if (!node) {
+            return;
+        }
         return {
             lloc: 0,
             cyclomatic: 0,

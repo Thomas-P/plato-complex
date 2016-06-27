@@ -75,7 +75,7 @@ describe('class ArrayExpression', () => {
 
 
 function getFixture() {
-    http://esprima.org/demo/parse.html?code=%5B%5D%0A
+    // http://esprima.org/demo/parse.html?code=%5B%5D%0A
     return {
         "type": "ArrayExpression",
         "elements": []

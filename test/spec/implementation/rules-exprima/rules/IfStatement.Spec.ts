@@ -18,9 +18,11 @@ describe('class IfStatement', () => {
         (settings, assignedName) =>
             (node:ESTree.IfStatement) => {
                 // every name have some entries
-                let checkNodes = (nodeResult:Array<any>) =>
-                    nodeNames
-                        .every((name) => nodeResult.some((rNode) => node[name] && deepEqual(rNode, node[name])))
+                let checkNodes = (nodeResult:Array<any>) => {
+                    return nodeNames
+                        .filter((name) => !! node[name])
+                        .every((name) => nodeResult.some((rNode) => deepEqual(rNode, node[name])))
+                }
 
                 let countNodes = nodeNames.filter((name) => !! node[name]).length;
 
@@ -51,8 +53,6 @@ describe('class IfStatement', () => {
                 assert.isArray(result.nextNodes, 'nextNodes must be an array.');
                 assert.lengthOf(result.nextNodes, countNodes, `nextNodes must have ${countNodes} entry/ies`);
                 assert.equal(checkNodes(result.nextNodes), true, 'Nodes should be mapped');
-
-                assert.equal(result.newScope, true);
 
             };
 

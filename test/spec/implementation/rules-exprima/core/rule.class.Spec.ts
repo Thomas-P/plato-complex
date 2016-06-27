@@ -136,6 +136,8 @@ describe('class EsPrimaRule', () => {
             assert.equal(EsPrimaRule.safeName({}, undefined),'<anonymous>');
             assert.equal(EsPrimaRule.safeName({ name: 'test'}, undefined),'test');
             assert.equal(EsPrimaRule.safeName({ name: 'test'}, '<default>'),'test');
+            assert.equal(EsPrimaRule.safeName('Hallo', undefined),'Hallo');
+            assert.equal(EsPrimaRule.safeName('Hallo', 'Welt'),'Hallo');
         });
     });
 
