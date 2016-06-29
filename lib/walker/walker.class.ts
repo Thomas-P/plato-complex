@@ -1,6 +1,6 @@
-import {IWalker, WalkerCommand, IWalkerCommand} from "./walker.interface";
-import {IRuleSet} from "../rule/rule-set.interface";
-import {IRuleResult} from "../rule/rule-result.interface";
+import {IWalker, WalkerCommand, IWalkerCommand} from "../.interfaces/walker/walker.interface";
+import {IRuleSet} from "../.interfaces/rules/rule-set.interface";
+import {IRuleResult} from "../.interfaces/rules/rule-result.interface";
 /**
  * Created by ThomasP on 22.06.2016.
  */
@@ -16,7 +16,7 @@ export class Walker<T, U> implements IWalker {
      * @param program
      * @returns {Observable<IWalkerCommand>}
      */
-    walk(program:T):Rx.Observable<IWalkerCommand<T>> {
+    walk(program: T):Rx.Observable<IWalkerCommand<T>> {
         return this.visitNode(program).filter((command) => !!command);
     }
 
@@ -36,27 +36,48 @@ export class Walker<T, U> implements IWalker {
             return Rx.Observer.throw(new Error('Could not get a result for node' + node.toString()));
         }
 
-        return Rx.Observable.concatAll(
+        let resultArray = [
             //
             // return the rule for this
             //
-            Rx.Observable.just({
+            {
                 cmd: WalkerCommand.visitNode,
                 data: result,
-            }),
+            },
             //
             // return the nodes that have to visit next
             //
             this.visitNodeList(result.nextNodes, result.assignableName),
-            //
-            // leave node message
-            //
-            Rx.Observable.just({
-                cmd: WalkerCommand.leaveNode,
-                data: result,
-            })
-        );
+        ];
 
+        //
+        // Dependencies
+        //
+        if (Array.isArray(result.dependencies)) {
+            resultArray.push(
+                result
+                    .dependencies
+                    .filter(file => !!file)
+                    .map((file:string) => {
+                        return {
+                            cmd: WalkerCommand.addDependency,
+                            data: file,
+                        }
+                    })
+            );
+        }
+
+        //
+        // leave node message
+        //
+        resultArray.push({
+            cmd: WalkerCommand.leaveNode,
+            data: result,
+        });
+
+        return Rx.Observable
+            .fromArray(resultArray)
+            .concatAll();
     }
 
 
@@ -66,9 +87,8 @@ export class Walker<T, U> implements IWalker {
      * @param assignedName
      */
     private visitNodeList(node:Array<T>, assignedName?:string):Rx.Observable<IWalkerCommand<T>> {
-        return Rx.Observer
+        return Rx.Observable
             .fromArray(node)
-            .delay(0)
             // return a flat map of all visited nodes
             .flatMap((node) => this.visitNode(node, assignedName))
     }
@@ -85,7 +105,7 @@ export class Walker<T, U> implements IWalker {
      * set the settings for the walker used in the process node method
      * @param settings
      */
-    setSettings(settings: U) {
+    setSettings(settings:U) {
         this.$settings = settings;
     }
 

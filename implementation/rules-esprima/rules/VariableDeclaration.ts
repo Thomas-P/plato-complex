@@ -1,5 +1,5 @@
 import {EsPrimaRule} from "../core/rule.class";
-import {IRuleResult} from "../../../lib/rule/rule-result.interface";
+import {IRuleResult} from "../../../lib/.interfaces/rules/rule-result.interface";
 /**
  * Created by ThomasP on 22.06.2016.
  */

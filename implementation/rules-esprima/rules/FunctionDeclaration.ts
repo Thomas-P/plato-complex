@@ -1,6 +1,6 @@
 import {EsPrimaRule} from "../core/rule.class";
-import {IRuleResult} from "../../../lib/rule/rule-result.interface";
-import {getDeepEntry} from "../../../lib/helper/getDeepEntry";
+import {IRuleResult} from "../../../lib/.interfaces/rules/rule-result.interface";
+import {getDeepEntry} from "../../../lib/.helper/getDeepEntry";
 import {getPropertyNameHelper} from "../core/propertyNameHelper";
 
 /**
@@ -14,12 +14,20 @@ export class FunctionDeclaration extends EsPrimaRule {
             return;
         }
         let name = getPropertyNameHelper(<ESTree.Node>getDeepEntry(node, 'id'));
+        let start: number = Number(getDeepEntry(node, 'loc', 'start', 'line'));
+        let end: number = Number(getDeepEntry(node, 'loc', 'end', 'line'));
+        let paramCount: number = Number(getDeepEntry(node, 'params', 'length'));
         return {
             lloc: 1,
             cyclomatic: 0,
             operators: ['function'],
             operands: [EsPrimaRule.safeName(name)],
-            newScope: true,
+            newScope: {
+                name: EsPrimaRule.safeName(name, assignedName),
+                start: start,
+                length: end-start+1,
+                paramCount: paramCount,
+            },
             nextNodes: this.getNodesToVisit(node, 'params', 'body')
         }
     }

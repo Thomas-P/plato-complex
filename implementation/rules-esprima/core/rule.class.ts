@@ -1,8 +1,8 @@
 import {MemberExpression} from "../rules/MemberExpression";
 import {Identifier} from "../rules/Identifier";
 import {Literal} from "../rules/Literal";
-import {IRule} from "../../../lib/rule/rule.interface";
-import {IRuleResult} from "../../../lib/rule/rule-result.interface";
+import {IRule} from "../../../lib/.interfaces/rules/rule.interface";
+import {IRuleResult} from "../../../lib/.interfaces/rules/rule-result.interface";
 import {getPropertyNameHelper} from "./propertyNameHelper";
 import {type} from "os";
 /**

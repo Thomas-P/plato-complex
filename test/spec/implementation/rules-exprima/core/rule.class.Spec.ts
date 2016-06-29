@@ -1,5 +1,5 @@
 import {EsPrimaRule} from "../../../../../implementation/rules-esprima/core/rule.class";
-import {IRuleResult} from "../../../../../lib/rule/rule-result.interface";
+import {IRuleResult} from "../../../../../lib/.interfaces/rules/rule-result.interface";
 const assert = require('chai').assert;
 /**
  * Created by ThomasP on 26.06.2016.
@@ -107,7 +107,7 @@ describe('class EsPrimaRule', () => {
     });
 
     /**
-     * test of static helper method
+     * test of static .helper method
      * @method getPropertyNameHelper
      */
     describe('#getPropertyNameHelper(node)', () => {

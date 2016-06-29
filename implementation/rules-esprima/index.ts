@@ -2,7 +2,7 @@ import {EsPrimaRuleSet} from "./core/rule-set.class";
 import {ArrayExpression} from "./rules/ArrayExpression";
 import {AssignmentExpression} from "./rules/AssignmentExpression";
 import {BinaryExpression} from "./rules/BinaryExpression";
-import {IRuleSet} from "../../lib/rule/rule-set.interface";
+import {IRuleSet} from "../../lib/.interfaces/rules/rule-set.interface";
 import {BlockStatement} from "./rules/BlockStatement";
 import {BreakStatement} from "./rules/BreakStatement";
 import {CallExpression} from "./rules/CallExpression";
@@ -35,6 +35,7 @@ import {VariableDeclaration} from "./rules/VariableDeclaration";
 import {VariableDeclarator} from "./rules/VariableDeclarator";
 import {WhileStatement} from "./rules/WhileStatement";
 import {WithStatement} from "./rules/WithStatement";
+import {Program} from "./rules/Program";
 /**
  * Created by ThomasP on 25.06.2016.
  */
@@ -45,6 +46,7 @@ let ruleSet:IRuleSet = new EsPrimaRuleSet();
  */
 export {ruleSet as esPrimaRules};
 
+ruleSet.addRule('Program', new Program());
 /**
  * @todo add rules for es6+7
  */

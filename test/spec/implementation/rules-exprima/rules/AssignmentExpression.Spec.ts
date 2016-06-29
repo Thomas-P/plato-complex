@@ -1,6 +1,6 @@
 import {AssignmentExpression} from "../../../../../implementation/rules-esprima/rules/AssignmentExpression";
 import {EsPrimaRule} from "../../../../../implementation/rules-esprima/core/rule.class";
-import {IRuleResult} from "../../../../../lib/rule/rule-result.interface";
+import {IRuleResult} from "../../../../../lib/.interfaces/rules/rule-result.interface";
 let assert = require('chai').assert;
 let deepEqual = require('deep-equal');
 /**
@@ -52,7 +52,7 @@ describe('class AssignmentExpression', () => {
     });
 
     /**
-     * test of static helper method
+     * test of static .helper method
      * @method processNode
      */
     describe('#processNode(node, settings, assigned name)', () => {

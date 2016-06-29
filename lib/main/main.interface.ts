@@ -1,6 +1,7 @@
-import {ISettings} from "../deprecated/settings.interface";
+import {IReportSettings} from "../.interfaces/report/report-settings.interface";
 import Observable = Rx.Observable;
-import {IWalker} from "../walker/walker.interface";
+import {IWalker} from "../.interfaces/walker/walker.interface";
+import {IReport} from "../.interfaces/report/report.interface";
 /**
  * Created by ThomasP on 27.06.2016.
  */
@@ -8,15 +9,12 @@ import {IWalker} from "../walker/walker.interface";
 
 
 
-export interface ICore {
+export interface IMain {
     
     
     
-    setSettings(settings: ISettings): void;
+    setSettings(settings: IReportSettings);
 
-
-
-    getSettings(): ISettings;
 
     /**
      * add files for main
@@ -24,15 +22,10 @@ export interface ICore {
      */
     addFiles(...files: Array<string>);
 
-    /**
-     * set the output folder
-     * @param folder
-     */
-    setOutputFolder(folder: string);
 
 
 
-    setWalker(walker: IWalker): void;
+    setWalker(walker: IWalker);
 
 
     /**
@@ -41,12 +34,12 @@ export interface ICore {
      * main.addAnalyser(main);
      * @param analyser
      */
-    addAnalyser(...analyser:Array<any>): void;
+    addAnalyser(...analyser:Array<any>);
 
 
     /**
      * Start with walking among the files and build up the report
      */
-    report(): Observable<any>;
+    init(): Observable<IReport>;
 
 }

@@ -1,4 +1,4 @@
-import {getDeepEntry} from "../../../lib/helper/getDeepEntry";
+import {getDeepEntry} from "../../../lib/.helper/getDeepEntry";
 /**
  * Created by ThomasP on 26.06.2016.
  */

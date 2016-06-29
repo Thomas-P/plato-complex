@@ -2,6 +2,13 @@
  * Created by ThomasP on 25.06.2016.
  */
 
+export interface IRuleResultScope {
+    name: string;
+    start: number;
+    length: number;
+    paramCount: number;
+}
+
 
 export interface IRuleResult<T> {
     /**
@@ -27,7 +34,7 @@ export interface IRuleResult<T> {
     /**
      * should a new scope created
      */
-    newScope?:boolean;
+    newScope?: IRuleResultScope;
     /**
      * Dependencies will be implement later
      */

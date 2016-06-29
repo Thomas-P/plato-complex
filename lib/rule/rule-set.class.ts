@@ -1,6 +1,6 @@
-import {IRuleSet} from "./rule-set.interface";
-import {IRule} from "./rule.interface";
-import {IRuleResult} from "./rule-result.interface";
+import {IRuleSet} from "../.interfaces/rules/rule-set.interface";
+import {IRule} from "../.interfaces/rules/rule.interface";
+import {IRuleResult} from "../.interfaces/rules/rule-result.interface";
 /**
  * Created by ThomasP on 25.06.2016.
  */

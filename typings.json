@@ -9,8 +9,6 @@
     "esprima": "registry:dt/esprima#2.1.0+20160621120642",
     "estree": "registry:dt/estree#0.0.0+20160317120654",
     "node": "registry:env/node#6.0.0+20160622202520",
-    "rx": "registry:dt/rx#0.0.0+20160317120654",
-    "rx-lite": "registry:dt/rx-lite#0.0.0+20160623134935",
-    "rx.all": "registry:dt/rx.all#2.2.28+20160316155526"
+    "rx.lite": "github:Reactive-Extensions/RxJS/ts/rx.lite.d.ts#v4.1.0"
   }
 }

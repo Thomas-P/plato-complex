@@ -1,6 +1,6 @@
 import Observable = Rx.Observable;
-import {IRuleResult} from "../rule/rule-result.interface";
-import {IRuleSet} from "../rule/rule-set.interface";
+import {IRuleResult} from "../rules/rule-result.interface";
+import {IRuleSet} from "../rules/rule-set.interface";
 /**
  * Created by ThomasP on 22.06.2016.
  */
@@ -8,6 +8,10 @@ export enum WalkerCommand {
     visitNode, leaveNode, addDependency
 }
 
+
+/**
+ *
+ */
 export interface IWalkerCommand<T> {
     cmd: WalkerCommand;
     data: string|IRuleResult<T>;
