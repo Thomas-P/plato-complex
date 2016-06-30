@@ -26,17 +26,19 @@ export class HalsteadAnalyser implements IAnalyser {
      * @param s
      */
     calculate(s: Rx.Observable<IWalkerCommand<ESTree.Node|string>>): Rx.Observable<IReport> {
-        let report: IReport = new HalsteadReport()
-        let stack:Array<ESTree.Node> = []
-        let result = Rx.Subject();
-
+        let report: IReport = new HalsteadReport();
+        let result = new Rx.Subject();
         s.subscribe(
-            report.processCommands,
-            result.onError,
+            (c) => {
+                report.processCommands(c)
+            },
+            (e) => {
+                result.onError(e)
+            },
             () => {
                 report.finishReport();
-                result.next(report);
-                result.onCompleted()
+                result.onNext(report);
+                result.onCompleted();
             }
         );
         return result;

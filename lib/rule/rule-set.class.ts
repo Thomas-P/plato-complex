@@ -11,7 +11,7 @@ export abstract class RuleSet implements IRuleSet {
 
 
     getRule(name:string):IRule {
-        return undefined;
+        return this.$ruleStore.get(name);
     }
 
 

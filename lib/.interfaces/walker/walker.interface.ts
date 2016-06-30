@@ -1,4 +1,3 @@
-import Observable = Rx.Observable;
 import {IRuleResult} from "../rules/rule-result.interface";
 import {IRuleSet} from "../rules/rule-set.interface";
 /**
@@ -48,7 +47,7 @@ export interface IWalker {
      * @param program
      * @return Observable<IWalkerCommand>
      */
-    walk<T, U>(program: T): Observable<IWalkerCommand<U>>;
+    walk<T, U>(program: Rx.Observable<T>): Rx.Observable<IWalkerCommand<U>>;
 
     /**
      * The walker need Rules for walking through all nodes. The default rule set is

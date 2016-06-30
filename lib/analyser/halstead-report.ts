@@ -90,7 +90,7 @@ export class HalsteadReport implements IReport {
                 oo.identifiers.push(identifier);
                 oo.distinct += 1;
             }
-        }
+        };
         if (Array.isArray(identifierArray) && identifierArray.length) {
             identifierArray.forEach(update);
         }
@@ -143,7 +143,7 @@ export class HalsteadReport implements IReport {
             report.cyclomatic += syntax.cyclomatic;
             this.processAllOperandsOrOperators(syntax.operators, report.halstead.operators);
             this.processAllOperandsOrOperators(syntax.operands, report.halstead.operands);
-        }
+        };
         process(this.aggregate);
         if (this.actualReport) {
             process(this.actualReport);
@@ -202,7 +202,7 @@ export class HalsteadReport implements IReport {
             let result = report.calculateMetrics();
             addSums(result);
         });
-        let resultMetric = this.$aggregate.calculateMetrics();
+        let resultMetric = this.aggregate.calculateMetrics();
         if (count === 0) {
             addSums(resultMetric);
             count++;

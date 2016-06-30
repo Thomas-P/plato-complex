@@ -13,7 +13,7 @@ export interface IParserConfig {
 /**
  * Interface for the parser
  */
-export interface IParser<U> {
+export interface IParser {
     setConfig(config: IParserConfig);
-    parse(fileData: string): Observable<U>
+    parse<U>(fileData: Observable<string>): Observable<U>
 }

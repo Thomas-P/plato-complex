@@ -1,6 +1,7 @@
 import {IWalker, WalkerCommand, IWalkerCommand} from "../.interfaces/walker/walker.interface";
 import {IRuleSet} from "../.interfaces/rules/rule-set.interface";
 import {IRuleResult} from "../.interfaces/rules/rule-result.interface";
+
 /**
  * Created by ThomasP on 22.06.2016.
  */
@@ -16,8 +17,18 @@ export class Walker<T, U> implements IWalker {
      * @param program
      * @returns {Observable<IWalkerCommand>}
      */
-    walk(program: T):Rx.Observable<IWalkerCommand<T>> {
-        return this.visitNode(program).filter((command) => !!command);
+    walk(program: Rx.Observable<T>):Rx.Observable<IWalkerCommand<T>> {
+        let result = new Rx.Subject();
+        program.subscribe(
+            (program: T) => {
+                this.visitNode(program)
+                    .filter((command) => !!command)
+                    .forEach((r) => result.onNext(r));
+            },
+            result.onError,
+            result.onCompleted
+        );
+        return result;
     }
 
 
@@ -27,15 +38,15 @@ export class Walker<T, U> implements IWalker {
      * @param assignedName
      * @returns {Observable<IWalkerCommand>}
      */
-    private visitNode(node:T, assignedName?:string):Rx.Observable<IWalkerCommand<T>> {
+    private visitNode(node:T, assignedName?:string):Array<IWalkerCommand<T>> {
         if (!node || typeof node !== 'object') {
-            return;
         }
         let result:IRuleResult<T> = this.$rules.processNode(node, this.$settings, assignedName);
-        if (!result) {
-            return Rx.Observer.throw(new Error('Could not get a result for node' + node.toString()));
-        }
 
+        if (!result) {
+            return;
+            //new Error('Could not get a result for node ' + node.toString());
+        }
         let resultArray = [
             //
             // return the rule for this
@@ -47,7 +58,7 @@ export class Walker<T, U> implements IWalker {
             //
             // return the nodes that have to visit next
             //
-            this.visitNodeList(result.nextNodes, result.assignableName),
+            ...this.visitNodeList(result.nextNodes, result.assignableName),
         ];
 
         //
@@ -55,7 +66,7 @@ export class Walker<T, U> implements IWalker {
         //
         if (Array.isArray(result.dependencies)) {
             resultArray.push(
-                result
+                ...result
                     .dependencies
                     .filter(file => !!file)
                     .map((file:string) => {
@@ -75,9 +86,7 @@ export class Walker<T, U> implements IWalker {
             data: result,
         });
 
-        return Rx.Observable
-            .fromArray(resultArray)
-            .concatAll();
+        return resultArray;
     }
 
 
@@ -86,11 +95,11 @@ export class Walker<T, U> implements IWalker {
      * @param node
      * @param assignedName
      */
-    private visitNodeList(node:Array<T>, assignedName?:string):Rx.Observable<IWalkerCommand<T>> {
-        return Rx.Observable
-            .fromArray(node)
-            // return a flat map of all visited nodes
-            .flatMap((node) => this.visitNode(node, assignedName))
+    private visitNodeList(node:Array<T>, assignedName?:string):Array<IWalkerCommand<T>> {
+        return Array.prototype.concat(
+            ...node.map((node:T|Array<T>) => {
+                return Array.isArray(node) ? this.visitNodeList(node, assignedName) : this.visitNode(node, assignedName);
+            }));
     }
 
     /**
