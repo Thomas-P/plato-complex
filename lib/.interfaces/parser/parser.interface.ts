@@ -1,4 +1,4 @@
-import Observable = Rx.Observable;
+
 /**
  * Created by ThomasP on 29.06.2016.
  */
@@ -15,5 +15,5 @@ export interface IParserConfig {
  */
 export interface IParser {
     setConfig(config: IParserConfig);
-    parse<U>(fileData: Observable<string>): Observable<U>
+    parse<U>(fileData: Rx.Observable<string>): Rx.Observable<U>
 }

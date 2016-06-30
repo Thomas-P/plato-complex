@@ -25,8 +25,8 @@ export class Walker<T, U> implements IWalker {
                     .filter((command) => !!command)
                     .forEach((r) => result.onNext(r));
             },
-            result.onError,
-            result.onCompleted
+            (e) => result.onError(e),
+            () => result.onCompleted()
         );
         return result;
     }

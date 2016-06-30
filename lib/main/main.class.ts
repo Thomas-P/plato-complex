@@ -120,8 +120,6 @@ export class Main implements IMain {
         if (!dirName) {
             dirName = process.cwd();
         }
-        // init walker
-        let walker = this.$walker;
         //
         // check if the file is present @todo make filepath absolute
         //
@@ -136,10 +134,24 @@ export class Main implements IMain {
         //
         // This is the result after read file
         //
-        let syntaxRulesObservable = this.$walker.walk(this.$parser.parse(fileObserver));
+        let parse = this.$parser.parse(fileObserver);
+        let walk = this.$walker.walk(parse);
+        let syntaxRulesObservable = walk;
+
+        let dependencies = syntaxRulesObservable
+            .filter((d: IWalkerCommand<T>) => d.cmd === WalkerCommand.addDependency)
+            .map((d) => this.fileProcessor(<string>d.data, dirName));
+
+        return Rx.Observable
+            .fromArray(this.$analysers)
+            .map((analyzer): IAnalyser => analyzer.calculate(syntaxRulesObservable))
+            .concatAll()
+            .concat(dependencies);
 
 
-        return syntaxRulesObservable;
+
+
+        //return syntaxRulesObservable;
 
     }
 
@@ -161,8 +173,8 @@ export class Main implements IMain {
             result.onError(`There are no AST walker specified, cannot start with reporting.`);
             errors++;
         }
-        if (!this.$walker) {
-            result.onError(`There are no AST walker specified, cannot start with reporting.`);
+        if (!this.$parser) {
+            result.onError(`There are no parser specified, cannot start with reporting.`);
             errors++;
         }
         if (errors == 0) {

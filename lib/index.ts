@@ -8,6 +8,8 @@ import {Walker} from "./walker/walker.class";
  */
 import {esPrimaRules} from '../implementation/rules-esprima/index';
 
+
+
 console.log(process.cwd());
 let walker = new Walker();
 walker.setRules(esPrimaRules);
@@ -15,10 +17,11 @@ let main = new Main();
 main.setWalker(walker);
 main.setParser(new EsPrimaParser());
 main.addFiles('../.play/script.js');
+main.addFiles('index.js');
 main.addAnalyser(new HalsteadAnalyser());
 main.init().subscribe(
     (o) => { console.log('A', o) },
     (e) => { console.error('E', e) }
 );
 
-//readFile('index.js').subscribe((o) => console.log(o));
+//readFile('index.js').parse((o) => console.log(o));
