@@ -1,6 +1,6 @@
 import {IRuleResult} from "../rules/rule-result.interface";
 import {IRuleSet} from "../rules/rule-set.interface";
-import {Observable} from 'rxjs/Observable';
+import {Observable} from "rxjs/Observable";
 import {IReportDependencies} from "../report/report.interface";
 import {IReportSettings} from "../report/report-settings.interface";
 /**
@@ -14,8 +14,8 @@ export enum WalkerCommand {
  *
  */
 export interface IWalkerCommand<T> {
-    cmd: WalkerCommand;
-    data: IReportDependencies|IRuleResult<T>;
+    cmd:WalkerCommand;
+    data:IReportDependencies|IRuleResult<T>;
 }
 
 
@@ -49,7 +49,7 @@ export interface IWalker {
      * @param program
      * @return Observable<IWalkerCommand>
      */
-    walk<T, U>(settings: IReportSettings, program: Observable<T>): Observable<IWalkerCommand<U>>;
+    walk<T, U>(settings:IReportSettings, program:Observable<T>):Observable<IWalkerCommand<U>>;
 
     /**
      * The walker need Rules for walking through all nodes. The default rule set is
@@ -57,5 +57,5 @@ export interface IWalker {
      * other languages etc.
      * @param rules
      */
-    setRules(rules: IRuleSet): void;
+    setRules(rules:IRuleSet):void;
 }

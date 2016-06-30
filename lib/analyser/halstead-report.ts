@@ -3,7 +3,8 @@
  */
 import {IReport, IReportDependencies, IReportAttributes} from "../.interfaces/report/report.interface";
 import {
-    IFunctionReport, IFunctionReportAttributes,
+    IFunctionReport,
+    IFunctionReportAttributes,
     ICalculateMetricsResult
 } from "../.interfaces/report/function-report.interface";
 import {FunctionReport} from "./function-report.class";
@@ -40,6 +41,7 @@ export class HalsteadReport implements IReport {
             absolute: this.absolute || '',
         };
     }
+
     private $functionStack:Array<IFunctionReport> = [];
 
 
@@ -188,10 +190,11 @@ export class HalsteadReport implements IReport {
     processCommands<T>(command:IWalkerCommand<T>) {
         switch (command.cmd) {
             case WalkerCommand.addDependency:
-                let data: IReportDependencies = <IReportDependencies>command.data;
+                let data:IReportDependencies = <IReportDependencies>command.data;
                 this.addDependency(data.path, data.line, data.type);
                 break;
-            case WalkerCommand.visitNode: {
+            case WalkerCommand.visitNode:
+            {
                 let result:IRuleResult<T> = <IRuleResult<T>>command.data;
                 this.processNode(result);
                 if (result.newScope) {
@@ -199,7 +202,8 @@ export class HalsteadReport implements IReport {
                 }
                 break;
             }
-            case WalkerCommand.leaveNode: {
+            case WalkerCommand.leaveNode:
+            {
                 let result:IRuleResult<T> = <IRuleResult<T>>command.data;
                 if (result.newScope) {
                     this.leaveSubFunction(result.newScope.name);

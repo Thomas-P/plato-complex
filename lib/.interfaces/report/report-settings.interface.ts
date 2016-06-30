@@ -9,9 +9,9 @@
  *
  */
 export interface IReportSettings {
-    tryCatch?: boolean;
-    forIn?: boolean;
-    logicalOr?: boolean;
-    switchCase?: boolean;
-    asPercentage?: boolean;
+    tryCatch?:boolean;
+    forIn?:boolean;
+    logicalOr?:boolean;
+    switchCase?:boolean;
+    asPercentage?:boolean;
 }

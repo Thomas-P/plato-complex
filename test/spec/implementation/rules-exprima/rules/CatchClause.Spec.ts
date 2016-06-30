@@ -1,7 +1,5 @@
 import {EsPrimaRule} from "../../../../../implementation/rules-esprima/core/rule.class";
-import {IRuleResult} from "../../../../../lib/.interfaces/rules/rule-result.interface";
 import {IRule} from "../../../../../lib/.interfaces/rules/rule.interface";
-import {settings} from "cluster";
 import {CatchClause} from "../../../../../implementation/rules-esprima/rules/CatchClause";
 import {getDeepEntry} from "../../../../../lib/.helper/getDeepEntry";
 let assert = require('chai').assert;
@@ -14,9 +12,9 @@ let deepEqual = require('deep-equal');
 
 describe('class CatchClause', () => {
 
-    let checkNode = (iRule: IRule, ...nodeNames:Array<string>) =>
+    let checkNode = (iRule:IRule, ...nodeNames:Array<string>) =>
         (settings, assignedName) =>
-            (node: ESTree.CatchClause) => {
+            (node:ESTree.CatchClause) => {
                 // every name have some entries
                 let checkNodes = (nodeResult:Array<any>) =>
                     nodeNames
@@ -65,7 +63,7 @@ describe('class CatchClause', () => {
     describe('#processNode(node, settings, assigned name)', () => {
         it('should have the correct interface', () => {
             let assign = new CatchClause();
-            assert.typeOf(assign.processNode,'function', 'must be a function');
+            assert.typeOf(assign.processNode, 'function', 'must be a function');
             assert.equal(assign.processNode.length, 3, '3 Args');
         });
 
@@ -77,27 +75,27 @@ describe('class CatchClause', () => {
             let check = checkAssign(undefined, undefined);
             check(getFixture());
 
-            check = checkAssign({ tryCatch: true }, undefined);
+            check = checkAssign({tryCatch: true}, undefined);
             check(getFixture());
-            check = checkAssign({ tryCatch: false }, undefined);
+            check = checkAssign({tryCatch: false}, undefined);
             check(getFixture());
         });
     });
 });
 
 /*
-function getFixture() {
-    // http://esprima.org/demo/parse.html?code=while(true)%20%7B%0A%09break%3B%09%0A%7D%0A
-    return {
-        "type": "CatchClause",
-        "callee": {
-            "type": "Identifier",
-            "name": "test"
-        },
-        "arguments": []
-    }
-}
-*/
+ function getFixture() {
+ // http://esprima.org/demo/parse.html?code=while(true)%20%7B%0A%09break%3B%09%0A%7D%0A
+ return {
+ "type": "CatchClause",
+ "callee": {
+ "type": "Identifier",
+ "name": "test"
+ },
+ "arguments": []
+ }
+ }
+ */
 function getFixture() {
     // http://esprima.org/demo/parse.html?code=try%20%7B%7D%20catch%20(e)%20%7B%20%7D
     return {

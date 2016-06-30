@@ -21,13 +21,13 @@ export class ContinueStatement extends EsPrimaRule {
 }
 
 /*
-'use strict';
+ 'use strict';
 
-var traits = require('../traits');
+ var traits = require('../traits');
 
-exports.get = get;
+ exports.get = get;
 
-function get () {
-    return traits.actualise(1, 0, 'continue', undefined, [ 'label' ]);
-}
-*/
+ function get () {
+ return traits.actualise(1, 0, 'continue', undefined, [ 'label' ]);
+ }
+ */

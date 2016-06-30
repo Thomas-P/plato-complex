@@ -14,12 +14,12 @@ export class EsPrimaRuleSet extends RuleSet {
      * @param assignedName
      * @returns {IRuleResult<ESTree.Node>}
      */
-    processNode<U>(node: ESTree.Node, settings:U, assignedName?:string):IRuleResult<ESTree.Node> {
+    processNode<U>(node:ESTree.Node, settings:U, assignedName?:string):IRuleResult<ESTree.Node> {
         // no rule
         if (!node || this.hasRule(node.type) === false) {
             return;
         }
-        let rule: IRule = this.getRule(node.type);
+        let rule:IRule = this.getRule(node.type);
         return rule.processNode(node, settings, assignedName);
     }
 }

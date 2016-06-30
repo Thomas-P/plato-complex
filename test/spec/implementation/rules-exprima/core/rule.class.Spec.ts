@@ -5,7 +5,7 @@ const assert = require('chai').assert;
  * Created by ThomasP on 26.06.2016.
  */
 // http://esprima.org/demo/parse.html?code=%2F%2F%20Life%2C%20Universe%2C%20and%20Everything%0Avar%20answer%20%3D%206%20*%207%3B%0Aa.b.c%20%3D%20c.a.b%3B%0A
-let node: any = {
+let node:any = {
     "type": "Program",
     "body": [
         {
@@ -118,7 +118,6 @@ describe('class EsPrimaRule', () => {
     });
 
 
-
     describe('#safeName(object, defaultName)', () => {
 
 
@@ -130,14 +129,14 @@ describe('class EsPrimaRule', () => {
 
 
         it('schould give the correct result', () => {
-            assert.equal(EsPrimaRule.safeName(undefined, undefined),'<anonymous>');
-            assert.equal(EsPrimaRule.safeName(undefined, '<default>'),'<default>');
-            assert.equal(EsPrimaRule.safeName({}, '<default>'),'<default>');
-            assert.equal(EsPrimaRule.safeName({}, undefined),'<anonymous>');
-            assert.equal(EsPrimaRule.safeName({ name: 'test'}, undefined),'test');
-            assert.equal(EsPrimaRule.safeName({ name: 'test'}, '<default>'),'test');
-            assert.equal(EsPrimaRule.safeName('Hallo', undefined),'Hallo');
-            assert.equal(EsPrimaRule.safeName('Hallo', 'Welt'),'Hallo');
+            assert.equal(EsPrimaRule.safeName(undefined, undefined), '<anonymous>');
+            assert.equal(EsPrimaRule.safeName(undefined, '<default>'), '<default>');
+            assert.equal(EsPrimaRule.safeName({}, '<default>'), '<default>');
+            assert.equal(EsPrimaRule.safeName({}, undefined), '<anonymous>');
+            assert.equal(EsPrimaRule.safeName({name: 'test'}, undefined), 'test');
+            assert.equal(EsPrimaRule.safeName({name: 'test'}, '<default>'), 'test');
+            assert.equal(EsPrimaRule.safeName('Hallo', undefined), 'Hallo');
+            assert.equal(EsPrimaRule.safeName('Hallo', 'Welt'), 'Hallo');
         });
     });
 

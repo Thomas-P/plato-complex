@@ -4,17 +4,15 @@
 
 let fileSystem = require('fs');
 let Rx = require('rxjs/rx');
-import {Observable} from 'rxjs/Observable';
-import {AsyncSubject} from 'rxjs/AsyncSubject';
-import {Subject} from 'rxjs/Subject';
+import {AsyncSubject} from "rxjs/AsyncSubject";
 
 /**
  *  Read a file and give the result as an observable back.
  * @param fileName
  */
-export function readFile(fileName: string): AsyncSubject<string> {
+export function readFile(fileName:string):AsyncSubject<string> {
     let subject:AsyncSubject<string> = new Rx.AsyncSubject();
-    fileSystem.readFile(fileName,(err, data) => {
+    fileSystem.readFile(fileName, (err, data) => {
         if (err) {
             subject.error(err);
         } else {

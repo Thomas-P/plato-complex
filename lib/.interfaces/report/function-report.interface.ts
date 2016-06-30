@@ -9,31 +9,31 @@ import {IHalstead, IHalsteadAttributes} from "../../analyser/halstead/halstead.i
  *
  * Reverse engineered by createFunctionReport function on module.js Line 91
  */
-export interface IFunctionReport extends IFunctionReportAttributes{
+export interface IFunctionReport extends IFunctionReportAttributes {
     calculateMetrics();
-    toJSON(): IFunctionReportAttributes
-    halstead: IHalstead;
+    toJSON():IFunctionReportAttributes
+    halstead:IHalstead;
 }
 
 /**
  * Interface for calculated metrics
  */
 export interface ICalculateMetricsResult {
-    loc: number;
-    cyclomatic: number;
-    effort: number;
-    paramCount: number;
+    loc:number;
+    cyclomatic:number;
+    effort:number;
+    paramCount:number;
 }
 /**
  * this is used for aggregations only and will be overwritten by the implementation interface
  * Has all attributes to get a some meta data from the functions
  */
 export interface IFunctionReportAttributes {
-    name: string;
-    sloc: ISloc;
-    cyclomatic: number;
-    halstead: IHalsteadAttributes;
-    paramCount: number;
-    startLine: number;
-    cyclomaticDensity: number;
+    name:string;
+    sloc:ISloc;
+    cyclomatic:number;
+    halstead:IHalsteadAttributes;
+    paramCount:number;
+    startLine:number;
+    cyclomaticDensity:number;
 }

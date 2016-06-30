@@ -1,15 +1,21 @@
 import {IParser, IParserConfig} from "../../lib/.interfaces/parser/parser.interface";
+import {Observable} from "rxjs/Rx";
 /**
  * Created by ThomasP on 30.06.2016.
  */
 
 let esprima = require('esprima');
 
-let Subject= require('rxjs/Subject').Subject;
-import {Observable} from "rxjs/Rx";
+let Subject = require('rxjs/Subject').Subject;
 
 export class EsPrimaParser implements IParser {
-    parse<U>(fileData: Observable<string> ):Observable<ESTree.Node> {
+    /**
+     * Parse a string and give an ESTree.Node back
+     * @see interface
+     * @param fileData
+     * @returns {Subject}
+     */
+    parse<U>(fileData:Observable<string>):Observable<ESTree.Node> {
         let subject = new Subject();
         fileData.subscribe({
             next(fileData:string)  {
@@ -26,6 +32,10 @@ export class EsPrimaParser implements IParser {
 
     }
 
+    /**
+     * not implemented for now
+     * @param config
+     */
     setConfig(config:IParserConfig) {
     }
 

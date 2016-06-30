@@ -8,7 +8,7 @@
  * @param attributes
  * @returns {Object}
  */
-export function getDeepEntry(obj: Object, ...attributes:Array<string>) {
+export function getDeepEntry(obj:Object, ...attributes:Array<string>) {
     while (obj && attributes.length) {
         let entry = attributes.shift();
         obj = obj[entry];

@@ -14,7 +14,7 @@ export class MemberExpression extends EsPrimaRule {
                 'ObjectExpression',
                 'ArrayExpression',
                 'FunctionExpression'
-            ].indexOf(node.object.type) === -1 ? 0: 1,
+            ].indexOf(node.object.type) === -1 ? 0 : 1,
             cyclomatic: 0,
             operators: ['.'],
             nextNodes: this.getNodesToVisit(node, 'object', 'property')
@@ -30,22 +30,22 @@ export class MemberExpression extends EsPrimaRule {
     static getPropertyName = getMemberExpressionNameHelper;
 }
 /*
-'use strict';
+ 'use strict';
 
-var traits = require('../traits');
+ var traits = require('../traits');
 
-exports.get = get;
+ exports.get = get;
 
-function get () {
-    return traits.actualise(
-        function (node) {
-            return [
-                'ObjectExpression',
-                'ArrayExpression',
-                'FunctionExpression'
-            ].indexOf(node.object.type) === -1 ? 0 : 1;
-        },
-        0, '.', undefined, [ 'object', 'property' ]
-    );
-}
-*/
+ function get () {
+ return traits.actualise(
+ function (node) {
+ return [
+ 'ObjectExpression',
+ 'ArrayExpression',
+ 'FunctionExpression'
+ ].indexOf(node.object.type) === -1 ? 0 : 1;
+ },
+ 0, '.', undefined, [ 'object', 'property' ]
+ );
+ }
+ */

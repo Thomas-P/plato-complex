@@ -7,7 +7,7 @@ import {IRuleResult} from "../.interfaces/rules/rule-result.interface";
 
 
 export abstract class RuleSet implements IRuleSet {
-    private $ruleStore: Map<string, IRule> = new Map();
+    private $ruleStore:Map<string, IRule> = new Map();
 
 
     getRule(name:string):IRule {
@@ -33,5 +33,5 @@ export abstract class RuleSet implements IRuleSet {
     }
 
 
-    abstract processNode<T, U>(node: T, settings: U, assignedName?: string): IRuleResult<T>;
+    abstract processNode<T, U>(node:T, settings:U, assignedName?:string):IRuleResult<T>;
 }

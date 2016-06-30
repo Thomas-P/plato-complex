@@ -2,13 +2,13 @@ import {EsPrimaParser} from "../implementation/parser-esprima/esprima-parser.cla
 import {Main} from "./main/main.class";
 import {HalsteadAnalyser} from "./analyser/halstead-analyser";
 import {Walker} from "./walker/walker.class";
+import {esPrimaRules} from "../implementation/rules-esprima/index";
+import {IReport, IReportAttributes} from "./.interfaces/report/report.interface";
 /**
  * Created by ThomasP on 23.06.2016.
  */
-import {esPrimaRules} from '../implementation/rules-esprima/index';
-import {IReport, IReportAttributes} from "./.interfaces/report/report.interface";
 
-let metrics: Array<IReportAttributes> = [];
+let metrics:Array<IReportAttributes> = [];
 
 /**
  * set up walker
@@ -33,7 +33,7 @@ main.addAnalyser(new HalsteadAnalyser());
 main
     .init()
     .subscribe({
-        next(report: IReport) {
+        next(report:IReport) {
             metrics.push(report.toJSON());
         },
         error(e) {

@@ -1,15 +1,11 @@
 import {IReportSettings} from "../.interfaces/report/report-settings.interface";
-import {Observable} from 'rxjs/Observable';
-import {AsyncSubject} from 'rxjs/AsyncSubject';
-import {Subject} from 'rxjs/Subject';
+import {Observable} from "rxjs/Observable";
 import {IWalker} from "../.interfaces/walker/walker.interface";
 import {IReport} from "../.interfaces/report/report.interface";
 import {IAnalyser} from "../.interfaces/analyser/analyser.interface";
 /**
  * Created by ThomasP on 27.06.2016.
  */
-
-
 
 
 export interface IMain {
@@ -20,7 +16,7 @@ export interface IMain {
      * that will provide a setting object with
      * the possible attributes for changing the report queries
      */
-    settings: IReportSettings;
+    settings:IReportSettings;
 
 
     /**
@@ -28,7 +24,7 @@ export interface IMain {
      * when the files will be parsed. A special command keeps then from tracking the nodes
      * @param files
      */
-    addFiles(...files: Array<string>);
+    addFiles(...files:Array<string>);
 
 
 
@@ -37,7 +33,7 @@ export interface IMain {
      * It is possible to implement an own walker instead of using them in this module.
      * @param walker
      */
-    setWalker(walker: IWalker);
+    setWalker(walker:IWalker);
 
 
     /**
@@ -54,6 +50,6 @@ export interface IMain {
      * Start with walking among the files and build up the report
      * It will give Reports for every file and dependency multiplied with every analyser.
      */
-    init(): Observable<IReport>;
+    init():Observable<IReport>;
 
 }

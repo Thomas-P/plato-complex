@@ -1,9 +1,6 @@
 import {EsPrimaRule} from "../../../../../implementation/rules-esprima/core/rule.class";
-import {IRuleResult} from "../../../../../lib/.interfaces/rules/rule-result.interface";
 import {IRule} from "../../../../../lib/.interfaces/rules/rule.interface";
-import {settings} from "cluster";
 import {FunctionExpression} from "../../../../../implementation/rules-esprima/rules/FunctionExpression";
-import {getDeepEntry} from "../../../../../lib/.helper/getDeepEntry";
 let assert = require('chai').assert;
 let deepEqual = require('deep-equal');
 /**
@@ -43,7 +40,7 @@ describe('class FunctionExpression', () => {
                 assert.isArray(result.nextNodes, 'nextNodes must be an array.');
                 assert.lengthOf(result.nextNodes, 2, 'nextNodes must have one entry/ies');
                 assert.equal(checkNodes(result.nextNodes), true, 'Nodes should be mapped');
-                
+
                 //assert.equal(result.newScope, true);
                 // @todo Assert new Scope
 
@@ -80,9 +77,9 @@ describe('class FunctionExpression', () => {
             let checkAssign = checkNode(assign, 'params', 'body');
             let check = checkAssign(undefined, undefined);
             check(getFixture());
-            check = checkAssign({ forIn: false }, undefined);
+            check = checkAssign({forIn: false}, undefined);
             check(getFixture());
-            check = checkAssign({ forIn: true }, undefined);
+            check = checkAssign({forIn: true}, undefined);
             check(getFixture());
         });
     });

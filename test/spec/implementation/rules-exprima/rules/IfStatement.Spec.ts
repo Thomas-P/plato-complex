@@ -1,9 +1,6 @@
 import {EsPrimaRule} from "../../../../../implementation/rules-esprima/core/rule.class";
-import {IRuleResult} from "../../../../../lib/.interfaces/rules/rule-result.interface";
 import {IRule} from "../../../../../lib/.interfaces/rules/rule.interface";
-import {settings} from "cluster";
 import {IfStatement} from "../../../../../implementation/rules-esprima/rules/IfStatement";
-import {getDeepEntry} from "../../../../../lib/.helper/getDeepEntry";
 let assert = require('chai').assert;
 let deepEqual = require('deep-equal');
 /**
@@ -20,11 +17,11 @@ describe('class IfStatement', () => {
                 // every name have some entries
                 let checkNodes = (nodeResult:Array<any>) => {
                     return nodeNames
-                        .filter((name) => !! node[name])
+                        .filter((name) => !!node[name])
                         .every((name) => nodeResult.some((rNode) => deepEqual(rNode, node[name])))
                 }
 
-                let countNodes = nodeNames.filter((name) => !! node[name]).length;
+                let countNodes = nodeNames.filter((name) => !!node[name]).length;
 
                 let result = iRule.processNode(node, settings, assignedName);
 
@@ -87,7 +84,7 @@ describe('class IfStatement', () => {
             let checkAssign = checkNode(assign, 'test', 'consequent', 'alternate', 'else');
             let check = checkAssign(undefined, undefined);
             check(getFixture());
-            check = checkAssign({ forIn: false }, undefined);
+            check = checkAssign({forIn: false}, undefined);
             check(getFixture2());
         });
     });

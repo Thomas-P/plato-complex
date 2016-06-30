@@ -17,13 +17,13 @@ export class ThisExpression extends EsPrimaRule {
     }
 }
 /*
-'use strict';
+ 'use strict';
 
-var traits = require('../traits');
+ var traits = require('../traits');
 
-exports.get = get;
+ exports.get = get;
 
-function get () {
-    return traits.actualise(0, 0, undefined, 'this');
-}
-*/
+ function get () {
+ return traits.actualise(0, 0, undefined, 'this');
+ }
+ */

@@ -37,6 +37,7 @@ export class Halstead implements IHalstead {
      * a singleton pattern
      */
     private $operators:IHalsteadOperatorsAndOperands;
+
     get operators() {
         if (!this.$operators) {
             this.$operators = {
@@ -54,6 +55,7 @@ export class Halstead implements IHalstead {
      * a singleton pattern
      */
     private $operands:IHalsteadOperatorsAndOperands;
+
     get operands() {
         if (!this.$operands) {
             this.$operands = {
@@ -87,7 +89,7 @@ export class Halstead implements IHalstead {
     /**
      * Calculate the halstead metric
      */
-    calculateHalsteadMetrics(): void {
+    calculateHalsteadMetrics():void {
         this.length = this.operators.total + this.operands.total;
         if (this.length === 0) {
             return;

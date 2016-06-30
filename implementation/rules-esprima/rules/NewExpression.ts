@@ -17,18 +17,18 @@ export class NewExpression extends EsPrimaRule {
     }
 }
 /*
-'use strict';
+ 'use strict';
 
-var traits = require('../traits');
+ var traits = require('../traits');
 
-exports.get = get;
+ exports.get = get;
 
-function get () {
-    return traits.actualise(
-        function (node) {
-            return node.callee.type === 'FunctionExpression' ? 1 : 0;
-        },
-        0, 'new', undefined, [ 'arguments', 'callee' ]
-    );
-}
-*/
+ function get () {
+ return traits.actualise(
+ function (node) {
+ return node.callee.type === 'FunctionExpression' ? 1 : 0;
+ },
+ 0, 'new', undefined, [ 'arguments', 'callee' ]
+ );
+ }
+ */

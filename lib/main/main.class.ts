@@ -7,24 +7,24 @@ import {IAnalyser} from "../.interfaces/analyser/analyser.interface";
 import {IReport, IReportDependencies} from "../.interfaces/report/report.interface";
 import {readFile} from "../.helper/fileReader";
 import {IReportSettings} from "../.interfaces/report/report-settings.interface";
+import {Observable} from "rxjs/Observable";
+import "rxjs/add/operator/filter";
+import "rxjs/add/operator/map";
+import "rxjs/add/operator/concat";
+import "rxjs/add/operator/concatAll";
+import "rxjs/add/observable/from";
+import "rxjs/add/observable/of";
+import {Settings} from "../settings/settings.class";
+import {extend} from "../.helper/extend";
+import {Subject} from "rxjs/Rx";
 
 let Rx = require('rxjs/rx');
-import {Observable} from 'rxjs/Observable';
 ///<reference path="../../node_modules/rxjs/add/operator/filter.d.ts" />
 ///<reference path="../../node_modules/rxjs/add/operator/map.d.ts" />
 ///<reference path="../../node_modules/rxjs/add/operator/concat.d.ts" />
 ///<reference path="../../node_modules/rxjs/add/operator/concatAll.d.ts" />
 ///<reference path="../../node_modules/rxjs/add/observable/of.d.ts" />
 ///<reference path="../../node_modules/rxjs/add/observable/from.d.ts" />
-import 'rxjs/add/operator/filter';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/concat';
-import 'rxjs/add/operator/concatAll';
-import 'rxjs/add/observable/from';
-import 'rxjs/add/observable/of';
-import {Settings} from "../settings/settings.class";
-import {extend} from "../.helper/extend";
-import {Subject, AsyncSubject} from "rxjs/Rx";
 
 var path = require('path');
 
@@ -38,18 +38,18 @@ export class Main implements IMain {
     //
     // Parser, Walker and RuleSet
     //
-    private $parser: IParser;
-    private $walker: IWalker;
-    private $ruleSet: IRuleSet;
-    private $settings: IReportSettings = {};
+    private $parser:IParser;
+    private $walker:IWalker;
+    private $ruleSet:IRuleSet;
+    private $settings:IReportSettings = {};
     //
     // file data
     //
-    private $files: Array<string> = [];
+    private $files:Array<string> = [];
     //
     // analysers
     //
-    private $analysers: Array<IAnalyser> = [];
+    private $analysers:Array<IAnalyser> = [];
 
 
     /**
@@ -60,7 +60,7 @@ export class Main implements IMain {
     }
 
 
-    get settings(): IReportSettings {
+    get settings():IReportSettings {
         if (!this.$settings) {
             this.$settings = new Settings();
         }
@@ -71,13 +71,13 @@ export class Main implements IMain {
      * add files for main
      * @param files
      */
-    addFiles(...files: Array<string>) {
+    addFiles(...files:Array<string>) {
         this.$files = this.$files
             .concat(files)
             //
             // unique the file result from adding
             //
-            .reduce((prev:Array<string>, curr: string) => {
+            .reduce((prev:Array<string>, curr:string) => {
                 if (prev.indexOf(curr) === -1) {
                     prev.push(curr);
                 }
@@ -90,16 +90,16 @@ export class Main implements IMain {
      * set the walker
      * @param walker
      */
-    setWalker(walker: IWalker) {
+    setWalker(walker:IWalker) {
         this.$walker = walker;
     }
 
 
-    setRules(ruleSet: IRuleSet) {
+    setRules(ruleSet:IRuleSet) {
         this.$ruleSet = ruleSet;
     }
 
-    setParser(parser: IParser) {
+    setParser(parser:IParser) {
         this.$parser = parser;
     }
 
@@ -116,7 +116,7 @@ export class Main implements IMain {
             //
             // unique the analyser result from adding
             //
-            .reduce((prev:Array<IAnalyser>, curr: IAnalyser) => {
+            .reduce((prev:Array<IAnalyser>, curr:IAnalyser) => {
                 if (prev.indexOf(curr) === -1) {
                     prev.push(curr);
                 }
@@ -125,23 +125,23 @@ export class Main implements IMain {
     }
 
 
-    private initFileProcess<T>(dirName?: string) {
+    private initFileProcess<T>(dirName?:string) {
         let result = new Rx.Subject();
         let count = this.$files.length;
-        let visitedFiles: Array<string> = [];
-        let settings: IReportSettings = extend({}, this.$settings);
+        let visitedFiles:Array<string> = [];
+        let settings:IReportSettings = extend({}, this.$settings);
         if (!dirName) {
             dirName = process.cwd();
         }
         let rootDir = dirName;
         // local file stack and settings
-        let fileStack: Subject<string> = new Rx.Subject();
+        let fileStack:Subject<string> = new Rx.Subject();
 
         /**
          * Processes one file and collect the dependencies
          * @param file
          */
-        let processFile = (file: string) => {
+        let processFile = (file:string) => {
             if (visitedFiles.indexOf(file) !== -1) {
                 count--;
                 return;
@@ -152,24 +152,23 @@ export class Main implements IMain {
             //
             //let dirRelative: string = path.dirname(fileRelative);
 
-            let fileRelative: string = path.relative(rootDir, file);
-            let filePosition: string = path.normalize(path.join(dirName, fileRelative));
-            let dirPosition: string = path.dirname(filePosition);
+            let fileRelative:string = path.relative(rootDir, file);
+            let filePosition:string = path.normalize(path.join(dirName, fileRelative));
+            let dirPosition:string = path.dirname(filePosition);
 
-            let fileObserver: Observable<string> = readFile(filePosition);
+            let fileObserver:Observable<string> = readFile(filePosition);
             let parse = this.$parser.parse(fileObserver);
             let walk = this.$walker.walk(settings, parse);
             let syntaxRulesObservable = walk;
 
 
             syntaxRulesObservable
-                .filter((d: IWalkerCommand<T>) => d.cmd === WalkerCommand.addDependency)
+                .filter((d:IWalkerCommand<T>) => d.cmd === WalkerCommand.addDependency)
                 .map((d) => d.data)
                 .subscribe({
-                    next(fileObject: IReportDependencies) {
-                        if (!fileObject ||
-                            !fileObject.path ||
-                            fileObject.path.startsWith('.')=== false ||
+                    next(fileObject:IReportDependencies) {
+                        if (!fileObject || !fileObject.path ||
+                            fileObject.path.startsWith('.') === false ||
                             fileObject.path.startsWith(path.sep)) {
                             return;
                         }
@@ -185,10 +184,10 @@ export class Main implements IMain {
 
             Rx.Observable
                 .from(this.$analysers)
-                .map((analyzer): IAnalyser => analyzer.calculate(syntaxRulesObservable))
+                .map((analyzer):IAnalyser => analyzer.calculate(syntaxRulesObservable))
                 .concatAll()
                 .subscribe({
-                    next(next: IReport) {
+                    next(next:IReport) {
                         next.path = file;
                         next.absolute = filePosition;
                         next.dir = dirName;
@@ -215,7 +214,7 @@ export class Main implements IMain {
 
         this.$files.forEach((file) => fileStack.next(file));
         fileStack.subscribe({
-            next(fileName: string) {
+            next(fileName:string) {
                 processFile(fileName);
             },
             error(e) {
@@ -236,7 +235,7 @@ export class Main implements IMain {
     /**
      * Start with walking among the files and build up the report
      */
-    init(): Observable<IReport> {
+    init():Observable<IReport> {
         let result = new Rx.Subject();
         let errors = 0;
         if (this.$analysers.length === 0) {

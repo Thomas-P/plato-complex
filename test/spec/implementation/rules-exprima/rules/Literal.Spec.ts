@@ -1,9 +1,6 @@
 import {EsPrimaRule} from "../../../../../implementation/rules-esprima/core/rule.class";
-import {IRuleResult} from "../../../../../lib/.interfaces/rules/rule-result.interface";
 import {IRule} from "../../../../../lib/.interfaces/rules/rule.interface";
-import {settings} from "cluster";
 import {Literal} from "../../../../../implementation/rules-esprima/rules/Literal";
-import {getDeepEntry} from "../../../../../lib/.helper/getDeepEntry";
 let assert = require('chai').assert;
 let deepEqual = require('deep-equal');
 /**

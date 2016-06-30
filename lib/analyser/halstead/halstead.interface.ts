@@ -2,7 +2,7 @@
  * Created by ThomasP on 22.06.2016.
  */
 
-export interface IHalstead extends IHalsteadAttributes{
+export interface IHalstead extends IHalsteadAttributes {
     /**
      * calculate the metrics
      */
@@ -11,7 +11,7 @@ export interface IHalstead extends IHalsteadAttributes{
     /**
      * Create a raw Object with the given attributes
      */
-    toJSON(): IHalsteadAttributes;
+    toJSON():IHalsteadAttributes;
 }
 
 
@@ -34,7 +34,7 @@ export interface IHalsteadAttributes extends IHalsteadState {
     /**
      * @default: 0
      */
-    length: number;
+    length:number;
     /**
      * @default: 0
      */
@@ -50,13 +50,12 @@ export interface IHalsteadAttributes extends IHalsteadState {
 }
 
 
-
 /**
  * Reverse engineered by createInitialHalsteadState function on module.js Line 112
  */
 export interface IHalsteadState {
-    operators: IHalsteadOperatorsAndOperands,
-    operands: IHalsteadOperatorsAndOperands,
+    operators:IHalsteadOperatorsAndOperands,
+    operands:IHalsteadOperatorsAndOperands,
 }
 
 
@@ -68,14 +67,14 @@ export interface IHalsteadOperatorsAndOperands {
     /**
      * @default: 0
      */
-    distinct: number;
+    distinct:number;
     /**
-     * @default: 0 
+     * @default: 0
      */
-    total: number;
+    total:number;
     /**
      * @default: []
      */
-    identifiers: Array<string>
+    identifiers:Array<string>
 }
 

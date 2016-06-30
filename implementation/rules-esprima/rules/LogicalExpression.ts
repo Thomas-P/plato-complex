@@ -9,8 +9,8 @@ import {IReportSettings} from "../../../lib/.interfaces/report/report-settings.i
 
 export class LogicalExpression extends EsPrimaRule {
     processNode<U extends IReportSettings>(node:ESTree.LogicalExpression, settings:U, assignedName?:string):IRuleResult<ESTree.Node> {
-        let isAnd: boolean = node.operator === '&&';
-        let isOr: boolean = node.operator === '||';
+        let isAnd:boolean = node.operator === '&&';
+        let isOr:boolean = node.operator === '||';
 
         return {
             lloc: 0,
@@ -21,24 +21,24 @@ export class LogicalExpression extends EsPrimaRule {
     }
 }
 /*
-'use strict';
+ 'use strict';
 
-var traits = require('../traits');
+ var traits = require('../traits');
 
-exports.get = get;
+ exports.get = get;
 
-function get (settings) {
-    return traits.actualise(
-        0,
-        function (node) {
-            var isAnd = node.operator === '&&';
-            var isOr = node.operator === '||';
-            return (isAnd || (settings.logicalor && isOr)) ? 1 : 0;
-        },
-        function (node) {
-            return node.operator;
-        },
-        undefined, [ 'left', 'right' ]
-    );
-}
-*/
+ function get (settings) {
+ return traits.actualise(
+ 0,
+ function (node) {
+ var isAnd = node.operator === '&&';
+ var isOr = node.operator === '||';
+ return (isAnd || (settings.logicalor && isOr)) ? 1 : 0;
+ },
+ function (node) {
+ return node.operator;
+ },
+ undefined, [ 'left', 'right' ]
+ );
+ }
+ */

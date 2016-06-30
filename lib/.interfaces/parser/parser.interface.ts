@@ -1,4 +1,3 @@
-
 /**
  * Created by ThomasP on 29.06.2016.
  */
@@ -20,7 +19,7 @@ export interface IParser {
      * @todo think about a good way to implement parser options
      * @param config
      */
-    setConfig(config: IParserConfig);
+    setConfig(config:IParserConfig);
     /**
      * the Parser will get a file string, can do crazy async stuff or what he wan't and
      * send the result to the subscriber
@@ -28,5 +27,5 @@ export interface IParser {
      * @param fileData
      *      Observer that gives you the file data
      */
-    parse<U>(fileData: Observable<string>): Observable<U>
+    parse<U>(fileData:Observable<string>):Observable<U>
 }

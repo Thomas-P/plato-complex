@@ -18,19 +18,19 @@ export class UnaryExpression extends EsPrimaRule {
     }
 }
 /*
-'use strict';
+ 'use strict';
 
-var traits = require('../traits');
+ var traits = require('../traits');
 
-exports.get = get;
+ exports.get = get;
 
-function get () {
-    return traits.actualise(
-        0, 0,
-        function (node) {
-            return node.operator + ' (' + (node.prefix ? 'pre' : 'post') + 'fix)';
-        },
-        undefined, [ 'argument' ]
-    );
-}
-*/
+ function get () {
+ return traits.actualise(
+ 0, 0,
+ function (node) {
+ return node.operator + ' (' + (node.prefix ? 'pre' : 'post') + 'fix)';
+ },
+ undefined, [ 'argument' ]
+ );
+ }
+ */

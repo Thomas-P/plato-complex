@@ -14,9 +14,9 @@ export class FunctionDeclaration extends EsPrimaRule {
             return;
         }
         let name = getPropertyNameHelper(<ESTree.Node>getDeepEntry(node, 'id'));
-        let start: number = Number(getDeepEntry(node, 'loc', 'start', 'line'));
-        let end: number = Number(getDeepEntry(node, 'loc', 'end', 'line'));
-        let paramCount: number = Number(getDeepEntry(node, 'params', 'length'));
+        let start:number = Number(getDeepEntry(node, 'loc', 'start', 'line'));
+        let end:number = Number(getDeepEntry(node, 'loc', 'end', 'line'));
+        let paramCount:number = Number(getDeepEntry(node, 'params', 'length'));
         return {
             lloc: 1,
             cyclomatic: 0,
@@ -25,7 +25,7 @@ export class FunctionDeclaration extends EsPrimaRule {
             newScope: {
                 name: EsPrimaRule.safeName(name, assignedName),
                 start: start,
-                length: end-start+1,
+                length: end - start + 1,
                 paramCount: paramCount,
             },
             nextNodes: this.getNodesToVisit(node, 'params', 'body')
@@ -33,20 +33,20 @@ export class FunctionDeclaration extends EsPrimaRule {
     }
 }
 /*
-'use strict';
+ 'use strict';
 
-var traits = require('../traits'),
-    safeName = require('../safeName');
+ var traits = require('../traits'),
+ safeName = require('../safeName');
 
-exports.get = get;
+ exports.get = get;
 
-function get () {
-    return traits.actualise(
-        1, 0, 'function',
-        function (node) {
-            return safeName(node.id);
-        },
-        [ 'params', 'body' ], undefined, true
-    );
-}
-*/
+ function get () {
+ return traits.actualise(
+ 1, 0, 'function',
+ function (node) {
+ return safeName(node.id);
+ },
+ [ 'params', 'body' ], undefined, true
+ );
+ }
+ */

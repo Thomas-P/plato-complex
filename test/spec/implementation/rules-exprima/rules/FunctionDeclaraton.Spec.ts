@@ -1,9 +1,6 @@
 import {EsPrimaRule} from "../../../../../implementation/rules-esprima/core/rule.class";
-import {IRuleResult} from "../../../../../lib/.interfaces/rules/rule-result.interface";
 import {IRule} from "../../../../../lib/.interfaces/rules/rule.interface";
-import {settings} from "cluster";
 import {FunctionDeclaration} from "../../../../../implementation/rules-esprima/rules/FunctionDeclaration";
-import {getDeepEntry} from "../../../../../lib/.helper/getDeepEntry";
 let assert = require('chai').assert;
 let deepEqual = require('deep-equal');
 /**
@@ -80,9 +77,9 @@ describe('class FunctionDeclaration', () => {
             let checkAssign = checkNode(assign, 'params', 'body');
             let check = checkAssign(undefined, undefined);
             check(getFixture());
-            check = checkAssign({ forIn: false }, undefined);
+            check = checkAssign({forIn: false}, undefined);
             check(getFixture());
-            check = checkAssign({ forIn: true }, undefined);
+            check = checkAssign({forIn: true}, undefined);
             check(getFixture());
         });
     });

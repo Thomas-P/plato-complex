@@ -14,26 +14,26 @@ export class DoWhileStatement extends EsPrimaRule {
         }
         return {
             lloc: 2,
-            cyclomatic: getDeepEntry(node, 'test') ? 1: 0,
+            cyclomatic: getDeepEntry(node, 'test') ? 1 : 0,
             operators: ['doWhile'],
             nextNodes: this.getNodesToVisit(node, 'test', 'body')
         }
     }
 }
 /*
-'use strict';
+ 'use strict';
 
-var traits = require('../traits');
+ var traits = require('../traits');
 
-exports.get = get;
+ exports.get = get;
 
-function get () {
-    return traits.actualise(
-        2,
-        function (node) {
-            return node.test ? 1 : 0;
-        },
-        'dowhile', undefined, [ 'test', 'body' ]
-    );
-}
-*/
+ function get () {
+ return traits.actualise(
+ 2,
+ function (node) {
+ return node.test ? 1 : 0;
+ },
+ 'dowhile', undefined, [ 'test', 'body' ]
+ );
+ }
+ */

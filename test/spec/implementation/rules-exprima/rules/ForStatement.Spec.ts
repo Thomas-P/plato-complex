@@ -1,7 +1,5 @@
 import {EsPrimaRule} from "../../../../../implementation/rules-esprima/core/rule.class";
-import {IRuleResult} from "../../../../../lib/.interfaces/rules/rule-result.interface";
 import {IRule} from "../../../../../lib/.interfaces/rules/rule.interface";
-import {settings} from "cluster";
 import {ForStatement} from "../../../../../implementation/rules-esprima/rules/ForStatement";
 import {getDeepEntry} from "../../../../../lib/.helper/getDeepEntry";
 let assert = require('chai').assert;
@@ -28,7 +26,7 @@ describe('class ForStatement', () => {
                 assert.isNotNull(result, null, 'result must be not null');
                 // standard
                 assert.equal(result.lloc, 1, 'LLoC must be 1.');
-                assert.equal(result.cyclomatic, getDeepEntry(node, 'test') ? 1: 0, 'Cyclomatic must be 0/1.');
+                assert.equal(result.cyclomatic, getDeepEntry(node, 'test') ? 1 : 0, 'Cyclomatic must be 0/1.');
                 // operators
                 assert.isArray(result.operators, 'operators must be an array.');
                 assert.lengthOf(result.operators, 1, 'operators.length must be 1.');
@@ -69,7 +67,7 @@ describe('class ForStatement', () => {
             let assign = new ForStatement();
             let result = assign.processNode(undefined, undefined, undefined);
             assert.isUndefined(result, 'No node -> undefined result.');
-            let checkAssign = checkNode(assign,  'init', 'test', 'update', 'body');
+            let checkAssign = checkNode(assign, 'init', 'test', 'update', 'body');
             let check = checkAssign(undefined, undefined);
             check(getFixture());
         });

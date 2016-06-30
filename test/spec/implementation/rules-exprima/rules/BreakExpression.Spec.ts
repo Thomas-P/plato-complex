@@ -9,7 +9,7 @@ let deepEqual = require('deep-equal');
 
 describe('class BreakStatement', () => {
 
-    let checkResult = (node: ESTree.BreakStatement, result: IRuleResult<ESTree.Node>) => {
+    let checkResult = (node:ESTree.BreakStatement, result:IRuleResult<ESTree.Node>) => {
         // every name have some entries
         let checkNodes = (nodeResult:Array<any>, ...nodeNames:Array<string>) =>
             nodeNames
@@ -59,7 +59,7 @@ describe('class BreakStatement', () => {
     describe('#processNode(node, settings, assigned name)', () => {
         it('should have the correct interface', () => {
             let assign = new BreakStatement();
-            assert.typeOf(assign.processNode,'function', 'must be a function');
+            assert.typeOf(assign.processNode, 'function', 'must be a function');
             assert.equal(assign.processNode.length, 3, '3 Args');
         });
 

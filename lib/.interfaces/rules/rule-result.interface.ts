@@ -8,10 +8,10 @@ import {IReportDependencies} from "../report/report.interface";
  * Scope with information for new function scopes
  */
 export interface IRuleResultScope {
-    name: string;
-    start: number;
-    length: number;
-    paramCount: number;
+    name:string;
+    start:number;
+    length:number;
+    paramCount:number;
 }
 
 
@@ -40,7 +40,7 @@ export interface IRuleResult<T> {
     /**
      * should a new scope created
      */
-    newScope?: IRuleResultScope;
+    newScope?:IRuleResultScope;
     /**
      * Dependencies will be implement later
      */

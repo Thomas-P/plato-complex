@@ -18,19 +18,19 @@ export class WhileStatement extends EsPrimaRule {
 }
 
 /*
-'use strict';
+ 'use strict';
 
-var traits = require('../traits');
+ var traits = require('../traits');
 
-exports.get = get;
+ exports.get = get;
 
-function get () {
-    return traits.actualise(
-        1,
-        function (node) {
-            return node.test ? 1 : 0;
-        },
-        'while', undefined, [ 'test', 'body' ]
-    );
-}
-*/
+ function get () {
+ return traits.actualise(
+ 1,
+ function (node) {
+ return node.test ? 1 : 0;
+ },
+ 'while', undefined, [ 'test', 'body' ]
+ );
+ }
+ */

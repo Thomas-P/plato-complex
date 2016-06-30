@@ -24,18 +24,18 @@ export class Identifier extends EsPrimaRule {
     static getPropertyName = getIdentifierExpressionNameHelper;
 }
 /*
-'use strict';
+ 'use strict';
 
-var traits = require('../traits');
+ var traits = require('../traits');
 
-exports.get = get;
+ exports.get = get;
 
-function get () {
-    return traits.actualise(
-        0, 0, undefined,
-        function (node) {
-            return node.name;
-        }
-    );
-}
-*/
+ function get () {
+ return traits.actualise(
+ 0, 0, undefined,
+ function (node) {
+ return node.name;
+ }
+ );
+ }
+ */

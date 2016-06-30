@@ -9,7 +9,7 @@ let deepEqual = require('deep-equal');
 
 describe('class ArrayExpression', () => {
 
-    let checkResult = (node: ESTree.ArrayExpression, result: IRuleResult<ESTree.Node>) => {
+    let checkResult = (node:ESTree.ArrayExpression, result:IRuleResult<ESTree.Node>) => {
         // every name have some entries
         let checkNodes = (nodeResult:Array<any>, ...nodeNames:Array<string>) =>
             nodeNames
@@ -36,7 +36,6 @@ describe('class ArrayExpression', () => {
         assert.equal(checkNodes(result.nextNodes, 'elements'), true, 'Nodes should be mapped');
 
 
-
     };
 
     /**
@@ -59,10 +58,10 @@ describe('class ArrayExpression', () => {
     describe('#processNode(node, settings, assigned name)', () => {
         it('should have the correct interface', () => {
             let assign = new ArrayExpression();
-            assert.typeOf(assign.processNode,'function', 'must be a function');
+            assert.typeOf(assign.processNode, 'function', 'must be a function');
             assert.equal(assign.processNode.length, 3, '3 Args');
         });
-        
+
         it('should have the right result', () => {
             let assign = new ArrayExpression();
             let result = assign.processNode(undefined, undefined, undefined);

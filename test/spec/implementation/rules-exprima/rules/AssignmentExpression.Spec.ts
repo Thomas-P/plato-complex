@@ -9,7 +9,7 @@ let deepEqual = require('deep-equal');
 
 describe('class AssignmentExpression', () => {
 
-    let checkResult = (node: ESTree.AssignmentExpression, result: IRuleResult<ESTree.Node>) => {
+    let checkResult = (node:ESTree.AssignmentExpression, result:IRuleResult<ESTree.Node>) => {
         // every name have some entries
         let checkNodes = (nodeResult:Array<any>, ...nodeNames:Array<string>) =>
             nodeNames
@@ -58,7 +58,7 @@ describe('class AssignmentExpression', () => {
     describe('#processNode(node, settings, assigned name)', () => {
         it('should have the correct interface', () => {
             let assign = new AssignmentExpression();
-            assert.typeOf(assign.processNode,'function', 'must be a function');
+            assert.typeOf(assign.processNode, 'function', 'must be a function');
             assert.equal(assign.processNode.length, 3, '3 Args');
         });
 

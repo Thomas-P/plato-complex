@@ -51,4 +51,4 @@ export class IfStatement extends EsPrimaRule {
         undefined, [ 'test', 'consequent', 'alternate' ]
     );
 }
-*/
+ */

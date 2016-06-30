@@ -9,7 +9,7 @@ let deepEqual = require('deep-equal');
 
 describe('class BinaryExpression', () => {
 
-    let checkResult = (node: ESTree.BinaryExpression, result: IRuleResult<ESTree.Node>) => {
+    let checkResult = (node:ESTree.BinaryExpression, result:IRuleResult<ESTree.Node>) => {
         // every name have some entries
         let checkNodes = (nodeResult:Array<any>, ...nodeNames:Array<string>) =>
             nodeNames
@@ -31,7 +31,6 @@ describe('class BinaryExpression', () => {
         assert.lengthOf(result.nextNodes, 2, 'nextNodes must have 2 entry/ies');
 
         assert.equal(checkNodes(result.nextNodes, 'left', 'right'), true, 'Nodes should be mapped');
-
 
 
     };
@@ -56,7 +55,7 @@ describe('class BinaryExpression', () => {
     describe('#processNode(node, settings, assigned name)', () => {
         it('should have the correct interface', () => {
             let assign = new BinaryExpression();
-            assert.typeOf(assign.processNode,'function', 'must be a function');
+            assert.typeOf(assign.processNode, 'function', 'must be a function');
             assert.equal(assign.processNode.length, 3, '3 Args');
         });
 

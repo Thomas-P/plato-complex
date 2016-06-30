@@ -4,11 +4,11 @@ import {getDeepEntry} from "../../../lib/.helper/getDeepEntry";
  */
 
 
-export function getLiteralExpressionNameHelper(node: ESTree.Literal): string {
+export function getLiteralExpressionNameHelper(node:ESTree.Literal):string {
     if (getDeepEntry(node, 'type') !== 'Literal') {
         return;
     }
-    let value: string;
+    let value:string;
     if (typeof node.value === 'number') {
         value = String(node.value);
     } else if (typeof node.value === 'string') {
@@ -20,19 +20,19 @@ export function getLiteralExpressionNameHelper(node: ESTree.Literal): string {
 }
 
 
-export function getIdentifierExpressionNameHelper(node: ESTree.Identifier): string {
+export function getIdentifierExpressionNameHelper(node:ESTree.Identifier):string {
     if (getDeepEntry(node, 'type') !== 'Identifier') {
         return;
     }
     return node.name;
 }
 
-export function getMemberExpressionNameHelper(node: ESTree.MemberExpression): string {
+export function getMemberExpressionNameHelper(node:ESTree.MemberExpression):string {
     if (getDeepEntry(node, 'type') !== 'MemberExpression') {
         return;
     }
-    let pre: string = getPropertyNameHelper(node.object);
-    let post: string= getPropertyNameHelper(node.property);
+    let pre:string = getPropertyNameHelper(node.object);
+    let post:string = getPropertyNameHelper(node.property);
     if (node.computed) {
         return `${pre}[${post}]`;
     }
@@ -40,11 +40,11 @@ export function getMemberExpressionNameHelper(node: ESTree.MemberExpression): st
 }
 
 
-export function getPropertyNameHelper(node: ESTree.Node): string {
+export function getPropertyNameHelper(node:ESTree.Node):string {
     if (!node) {
         return;
     }
-    let name: string;
+    let name:string;
     if (node.type === 'MemberExpression') {
         name = getMemberExpressionNameHelper(<ESTree.MemberExpression>node);
     } else if (node.type === 'Identifier') {

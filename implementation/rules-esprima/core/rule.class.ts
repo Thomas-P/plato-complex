@@ -1,14 +1,9 @@
-import {MemberExpression} from "../rules/MemberExpression";
-import {Identifier} from "../rules/Identifier";
-import {Literal} from "../rules/Literal";
 import {IRule} from "../../../lib/.interfaces/rules/rule.interface";
 import {IRuleResult} from "../../../lib/.interfaces/rules/rule-result.interface";
 import {getPropertyNameHelper} from "./propertyNameHelper";
-import {type} from "os";
 /**
  * Created by ThomasP on 25.06.2016.
  */
-
 
 
 export abstract class EsPrimaRule implements IRule {
@@ -22,19 +17,18 @@ export abstract class EsPrimaRule implements IRule {
     abstract processNode<U>(node:ESTree.Node, settings:U, assignedName?:string):IRuleResult<ESTree.Node>;
 
 
-
     /**
      * Helper method to get the nodes, which should be visited next
      * @param node
      * @param names
      * @returns {Array<Statement>}
      */
-    protected getNodesToVisit(node: ESTree.Node, ...names: Array<string>): Array<ESTree.Node> {
+    protected getNodesToVisit(node:ESTree.Node, ...names:Array<string>):Array<ESTree.Node> {
         if (!node || !Array.isArray(names)) {
             return [];
         }
         return names
-            .map((name: string) => <ESTree.Node>node[name])
+            .map((name:string) => <ESTree.Node>node[name])
             .filter((exists) => !!exists);
     }
 
@@ -45,7 +39,7 @@ export abstract class EsPrimaRule implements IRule {
      * @param defaultName
      * @returns {string}
      */
-    static safeName(object, defaultName?: string): string {
+    static safeName(object, defaultName?:string):string {
         if (object && typeof object.name === 'string' && object.name.length) {
             return object.name;
         }

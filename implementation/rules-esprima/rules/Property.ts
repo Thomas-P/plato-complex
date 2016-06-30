@@ -18,19 +18,19 @@ export class Property extends EsPrimaRule {
     }
 }
 /*
-'use strict';
+ 'use strict';
 
-var traits = require('../traits'),
-    safeName = require('../safeName');
+ var traits = require('../traits'),
+ safeName = require('../safeName');
 
-exports.get = get;
+ exports.get = get;
 
-function get () {
-    return traits.actualise(
-        1, 0, ':', undefined, [ 'key', 'value' ],
-        function (node) {
-            return safeName(node.key);
-        }
-    );
-}
-*/
+ function get () {
+ return traits.actualise(
+ 1, 0, ':', undefined, [ 'key', 'value' ],
+ function (node) {
+ return safeName(node.key);
+ }
+ );
+ }
+ */

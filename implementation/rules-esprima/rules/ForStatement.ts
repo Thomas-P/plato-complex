@@ -14,26 +14,26 @@ export class ForStatement extends EsPrimaRule {
         }
         return {
             lloc: 1,
-            cyclomatic: getDeepEntry(node, 'test') ? 1: 0,
+            cyclomatic: getDeepEntry(node, 'test') ? 1 : 0,
             operators: ['for'],
             nextNodes: this.getNodesToVisit(node, 'init', 'test', 'update', 'body')
         }
     }
 }
 /*
-'use strict';
+ 'use strict';
 
-var traits = require('../traits');
+ var traits = require('../traits');
 
-exports.get = get;
+ exports.get = get;
 
-function get () {
-    return traits.actualise(
-        1,
-        function (node) {
-            return node.test ? 1 : 0;
-        },
-        'for', undefined, [ 'init', 'test', 'update', 'body' ]
-    );
-}
-*/
+ function get () {
+ return traits.actualise(
+ 1,
+ function (node) {
+ return node.test ? 1 : 0;
+ },
+ 'for', undefined, [ 'init', 'test', 'update', 'body' ]
+ );
+ }
+ */

@@ -4,11 +4,11 @@ import {IReportSettings} from "../.interfaces/report/report-settings.interface";
  */
 
 export class Settings implements IReportSettings {
-    tryCatch: boolean = false;
-    forIn: boolean = false;
-    logicalOr: boolean = false;
-    switchCase: boolean = false;
-    asPercentage: boolean = false;
+    tryCatch:boolean = false;
+    forIn:boolean = false;
+    logicalOr:boolean = false;
+    switchCase:boolean = false;
+    asPercentage:boolean = false;
 
     constructor() {
 

@@ -7,32 +7,32 @@ import {IRuleResult} from "../../../lib/.interfaces/rules/rule-result.interface"
 
 
 export class SwitchCase extends EsPrimaRule {
-    processNode<U extends { switchCase: boolean }>(node:ESTree.SwitchCase, settings:U, assignedName?:string):IRuleResult<ESTree.Node> {
+    processNode<U extends { switchCase:boolean }>(node:ESTree.SwitchCase, settings:U, assignedName?:string):IRuleResult<ESTree.Node> {
         return {
             lloc: 1,
-            cyclomatic: settings.switchCase && node.test ? 1: 0,
+            cyclomatic: settings.switchCase && node.test ? 1 : 0,
             operators: [node.test ? 'case' : 'default'],
             nextNodes: this.getNodesToVisit(node, 'test', 'consequent')
         }
     }
 }
 /*
-'use strict';
+ 'use strict';
 
-var traits = require('../traits');
+ var traits = require('../traits');
 
-exports.get = get;
+ exports.get = get;
 
-function get (settings) {
-    return traits.actualise(
-        1,
-        function (node) {
-            return settings.switchcase && node.test ? 1 : 0;
-        },
-        function (node) {
-            return node.test ? 'case' : 'default';
-        },
-        undefined, [ 'test', 'consequent' ]
-    );
-}
-*/
+ function get (settings) {
+ return traits.actualise(
+ 1,
+ function (node) {
+ return settings.switchcase && node.test ? 1 : 0;
+ },
+ function (node) {
+ return node.test ? 'case' : 'default';
+ },
+ undefined, [ 'test', 'consequent' ]
+ );
+ }
+ */

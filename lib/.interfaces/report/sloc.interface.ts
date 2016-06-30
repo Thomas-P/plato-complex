@@ -9,10 +9,10 @@ export interface ISloc {
     /**
      * @default:
      */
-    logical: number;
+    logical:number;
     /**
      * @default:
      */
-    physical: number;
+    physical:number;
 }
 

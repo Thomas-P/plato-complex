@@ -9,14 +9,14 @@
  * @param from
  * @param excludes
  */
-export function merge (to, from, ...excludes:Array<string>) {
+export function merge(to, from, ...excludes:Array<string>) {
     to = (typeof to === 'object') && (to !== null) ? to : {};
     if (typeof from !== 'object') {
         return;
     }
     Object
         .keys(from)
-        .filter((name) => excludes.length===0 || excludes.every((exclude) => exclude !== name) )
+        .filter((name) => excludes.length === 0 || excludes.every((exclude) => exclude !== name))
         .forEach((name) => {
             if (typeof from[name] === 'object') {
                 to[name] = {};

@@ -1,7 +1,5 @@
 import {EsPrimaRule} from "../../../../../implementation/rules-esprima/core/rule.class";
-import {IRuleResult} from "../../../../../lib/.interfaces/rules/rule-result.interface";
 import {IRule} from "../../../../../lib/.interfaces/rules/rule.interface";
-import {settings} from "cluster";
 import {DoWhileStatement} from "../../../../../implementation/rules-esprima/rules/DoWhileStatement";
 import {getDeepEntry} from "../../../../../lib/.helper/getDeepEntry";
 let assert = require('chai').assert;
@@ -69,7 +67,7 @@ describe('class DoWhileStatement', () => {
             let assign = new DoWhileStatement();
             let result = assign.processNode(undefined, undefined, undefined);
             assert.isUndefined(result, 'No node -> undefined result.');
-            let checkAssign = checkNode(assign,  'test', 'body');
+            let checkAssign = checkNode(assign, 'test', 'body');
             let check = checkAssign(undefined, undefined);
             check(getFixture());
         });

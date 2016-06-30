@@ -10,5 +10,5 @@ import {IRuleResult} from "./rule-result.interface";
  * the rules implement the strategy pattern by defining the result an so the next step for the walker
  */
 export interface IRule {
-    processNode<T, U>(node: T, settings: U, assignedName?: string): IRuleResult<T>;
+    processNode<T, U>(node:T, settings:U, assignedName?:string):IRuleResult<T>;
 }

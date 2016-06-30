@@ -10,43 +10,43 @@ export {IFunctionReportAttributes, IFunctionReport} from "./function-report.inte
  * Reverse engineered by createReport function on module.js Line 83
  */
 export interface IReport extends IReportAttributes {
-    aggregate: IFunctionReportAttributes;
-    functions: Array<IFunctionReport>;
+    aggregate:IFunctionReportAttributes;
+    functions:Array<IFunctionReport>;
 
-    processCommands<T>(command: IWalkerCommand<T>);
+    processCommands<T>(command:IWalkerCommand<T>);
     finishReport();
-    toJSON(): IReportAttributes;
+    toJSON():IReportAttributes;
 }
 
 /**
- * Attributes for reports 
+ * Attributes for reports
  * External for toJSON objects
  */
 export interface IReportAttributes {
-    aggregate: IFunctionReportAttributes;
-    functions: Array<IFunctionReportAttributes>;
-    dependencies: Array<IReportDependencies>;
-    maintainablility: number;
-    loc: number;
-    cyclomatic: number;
-    effort: number;
-    params: number;
-    
-    
-    path: string;
+    aggregate:IFunctionReportAttributes;
+    functions:Array<IFunctionReportAttributes>;
+    dependencies:Array<IReportDependencies>;
+    maintainablility:number;
+    loc:number;
+    cyclomatic:number;
+    effort:number;
+    params:number;
+
+
+    path:string;
     /**
      * give the absolute file position
      */
-    absolute: string;
+    absolute:string;
     /**
      * dir from where the file called
      */
-    dir: string;
+    dir:string;
 }
 
 
 export interface IReportDependencies {
-    line: number;
-    path: string;
-    type: string;
+    line:number;
+    path:string;
+    type:string;
 }

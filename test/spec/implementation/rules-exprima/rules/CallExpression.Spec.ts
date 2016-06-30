@@ -1,7 +1,5 @@
 import {EsPrimaRule} from "../../../../../implementation/rules-esprima/core/rule.class";
-import {IRuleResult} from "../../../../../lib/.interfaces/rules/rule-result.interface";
 import {IRule} from "../../../../../lib/.interfaces/rules/rule.interface";
-import {settings} from "cluster";
 import {CallExpression} from "../../../../../implementation/rules-esprima/rules/CallExpression";
 import {getDeepEntry} from "../../../../../lib/.helper/getDeepEntry";
 let assert = require('chai').assert;
@@ -14,8 +12,8 @@ let deepEqual = require('deep-equal');
 
 describe('class CallExpression', () => {
 
-    let checkNode = (settings, assignedName, iRule: IRule, ...nodeNames:Array<string>) =>
-        (node: ESTree.CallExpression) => {
+    let checkNode = (settings, assignedName, iRule:IRule, ...nodeNames:Array<string>) =>
+        (node:ESTree.CallExpression) => {
             // every name have some entries
             let checkNodes = (nodeResult:Array<any>) =>
                 nodeNames
@@ -64,7 +62,7 @@ describe('class CallExpression', () => {
     describe('#processNode(node, settings, assigned name)', () => {
         it('should have the correct interface', () => {
             let assign = new CallExpression();
-            assert.typeOf(assign.processNode,'function', 'must be a function');
+            assert.typeOf(assign.processNode, 'function', 'must be a function');
             assert.equal(assign.processNode.length, 3, '3 Args');
         });
 

@@ -28,13 +28,13 @@ export class BinaryExpression extends EsPrimaRule {
  exports.get = get;
 
  function get () {
-     return traits.actualise(
-        0, 0,
-        function (node) {
-            return node.operator;
-        },
-        undefined, [ 'left', 'right' ]
-    );
+ return traits.actualise(
+ 0, 0,
+ function (node) {
+ return node.operator;
+ },
+ undefined, [ 'left', 'right' ]
+ );
  }
 
  */

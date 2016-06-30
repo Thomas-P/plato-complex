@@ -20,13 +20,13 @@ export class ConditionalExpression extends EsPrimaRule {
     }
 }
 /*
-'use strict';
+ 'use strict';
 
-var traits = require('../traits');
+ var traits = require('../traits');
 
-exports.get = get;
+ exports.get = get;
 
-function get () {
-    return traits.actualise(0, 1, ':?', undefined, [ 'test', 'consequent', 'alternate' ]);
-}
-*/
+ function get () {
+ return traits.actualise(0, 1, ':?', undefined, [ 'test', 'consequent', 'alternate' ]);
+ }
+ */

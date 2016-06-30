@@ -28,6 +28,6 @@ export class BreakStatement extends EsPrimaRule {
  exports.get = get;
 
  function get () {
-    return traits.actualise(1, 0, 'break', undefined, [ 'label' ]);
+ return traits.actualise(1, 0, 'break', undefined, [ 'label' ]);
  }
  */

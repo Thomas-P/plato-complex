@@ -1,6 +1,7 @@
 import {ISloc} from "../.interfaces/report/sloc.interface";
 import {
-    IFunctionReport, ICalculateMetricsResult,
+    IFunctionReport,
+    ICalculateMetricsResult,
     IFunctionReportAttributes
 } from "../.interfaces/report/function-report.interface";
 import {IHalstead} from "./halstead/halstead.interface";
@@ -22,6 +23,7 @@ export class FunctionReport implements IFunctionReport {
             startLine: this.startLine || 0,
         };
     }
+
     private $sloc:ISloc;
     private $halstead:IHalstead;
 
