@@ -1,5 +1,8 @@
 import {ISloc} from "../.interfaces/report/sloc.interface";
-import {IFunctionReport, ICalculateMetricsResult} from "../.interfaces/report/function-report.interface";
+import {
+    IFunctionReport, ICalculateMetricsResult,
+    IFunctionReportAttributes
+} from "../.interfaces/report/function-report.interface";
 import {IHalstead} from "./halstead/halstead.interface";
 import {Halstead} from "./halstead/halstead.class";
 /**
@@ -8,6 +11,17 @@ import {Halstead} from "./halstead/halstead.class";
 
 
 export class FunctionReport implements IFunctionReport {
+    toJSON():IFunctionReportAttributes {
+        return {
+            cyclomatic: this.cyclomatic || 0,
+            cyclomaticDensity: this.cyclomaticDensity || 0,
+            halstead: this.$halstead.toJSON(),
+            name: this.name || '<unnamed>',
+            paramCount: this.paramCount || 0,
+            sloc: this.sloc,
+            startLine: this.startLine || 0,
+        };
+    }
     private $sloc:ISloc;
     private $halstead:IHalstead;
 

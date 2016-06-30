@@ -8,7 +8,6 @@
   "globalDependencies": {
     "esprima": "registry:dt/esprima#2.1.0+20160621120642",
     "estree": "registry:dt/estree#0.0.0+20160317120654",
-    "node": "registry:env/node#6.0.0+20160622202520",
-    "rx.lite": "github:Reactive-Extensions/RxJS/ts/rx.lite.d.ts#v4.1.0"
+    "node": "registry:env/node#6.0.0+20160622202520"
   }
 }

@@ -6,27 +6,36 @@ import {IRuleResult} from "../.interfaces/rules/rule-result.interface";
  * Created by ThomasP on 22.06.2016.
  */
 
-let Rx = require('Rx');
+let Rx = require('rxjs/rx');
+import {Observable} from 'rxjs/Observable';
+import {AsyncSubject} from 'rxjs/AsyncSubject';
+import {Subject} from 'rxjs/Subject';
+import {IReportDependencies} from "../.interfaces/report/report.interface";
+import {IReportSettings} from "../.interfaces/report/report-settings.interface";
 
+/**
+ * @see interface
+ */
 export class Walker<T, U> implements IWalker {
     private $rules:IRuleSet;
-    private $settings:U;
 
     /**
      * @see interface
      * @param program
      * @returns {Observable<IWalkerCommand>}
      */
-    walk(program: Rx.Observable<T>):Rx.Observable<IWalkerCommand<T>> {
-        let result = new Rx.Subject();
+    walk(settings: IReportSettings, program: Observable<T>):Observable<IWalkerCommand<T>> {
+        // @todo: default fallback?
+        settings = settings || {};
+        let result: Subject<IWalkerCommand<T>> = new Rx.Subject();
         program.subscribe(
             (program: T) => {
-                this.visitNode(program)
+                this.visitNode(settings, program)
                     .filter((command) => !!command)
-                    .forEach((r) => result.onNext(r));
+                    .forEach((r) => result.next(r));
             },
-            (e) => result.onError(e),
-            () => result.onCompleted()
+            (e) => result.error(e),
+            () => result.complete()
         );
         return result;
     }
@@ -38,10 +47,10 @@ export class Walker<T, U> implements IWalker {
      * @param assignedName
      * @returns {Observable<IWalkerCommand>}
      */
-    private visitNode(node:T, assignedName?:string):Array<IWalkerCommand<T>> {
+    private visitNode(settings: IReportSettings, node:T, assignedName?:string):Array<IWalkerCommand<T>> {
         if (!node || typeof node !== 'object') {
         }
-        let result:IRuleResult<T> = this.$rules.processNode(node, this.$settings, assignedName);
+        let result:IRuleResult<T> = this.$rules.processNode(node, settings, assignedName);
 
         if (!result) {
             return;
@@ -58,7 +67,7 @@ export class Walker<T, U> implements IWalker {
             //
             // return the nodes that have to visit next
             //
-            ...this.visitNodeList(result.nextNodes, result.assignableName),
+            ...this.visitNodeList(settings, result.nextNodes, result.assignableName),
         ];
 
         //
@@ -69,7 +78,7 @@ export class Walker<T, U> implements IWalker {
                 ...result
                     .dependencies
                     .filter(file => !!file)
-                    .map((file:string) => {
+                    .map((file:IReportDependencies) => {
                         return {
                             cmd: WalkerCommand.addDependency,
                             data: file,
@@ -95,10 +104,10 @@ export class Walker<T, U> implements IWalker {
      * @param node
      * @param assignedName
      */
-    private visitNodeList(node:Array<T>, assignedName?:string):Array<IWalkerCommand<T>> {
+    private visitNodeList(settings: IReportSettings, node:Array<T>, assignedName?:string):Array<IWalkerCommand<T>> {
         return Array.prototype.concat(
             ...node.map((node:T|Array<T>) => {
-                return Array.isArray(node) ? this.visitNodeList(node, assignedName) : this.visitNode(node, assignedName);
+                return Array.isArray(node) ? this.visitNodeList(settings, node, assignedName) : this.visitNode(settings, node, assignedName);
             }));
     }
 
@@ -109,13 +118,4 @@ export class Walker<T, U> implements IWalker {
     setRules(rules:IRuleSet):void {
         this.$rules = rules;
     }
-
-    /**
-     * set the settings for the walker used in the process node method
-     * @param settings
-     */
-    setSettings(settings:U) {
-        this.$settings = settings;
-    }
-
 }

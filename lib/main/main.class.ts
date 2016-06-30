@@ -4,11 +4,29 @@ import {IParser} from "../.interfaces/parser/parser.interface";
 import {IWalker, IWalkerCommand, WalkerCommand} from "../.interfaces/walker/walker.interface";
 import {IRuleSet} from "../.interfaces/rules/rule-set.interface";
 import {IAnalyser} from "../.interfaces/analyser/analyser.interface";
-import {IReport} from "../.interfaces/report/report.interface";
+import {IReport, IReportDependencies} from "../.interfaces/report/report.interface";
 import {readFile} from "../.helper/fileReader";
 import {IReportSettings} from "../.interfaces/report/report-settings.interface";
 
-let Rx = require('rx');
+let Rx = require('rxjs/rx');
+import {Observable} from 'rxjs/Observable';
+///<reference path="../../node_modules/rxjs/add/operator/filter.d.ts" />
+///<reference path="../../node_modules/rxjs/add/operator/map.d.ts" />
+///<reference path="../../node_modules/rxjs/add/operator/concat.d.ts" />
+///<reference path="../../node_modules/rxjs/add/operator/concatAll.d.ts" />
+///<reference path="../../node_modules/rxjs/add/observable/of.d.ts" />
+///<reference path="../../node_modules/rxjs/add/observable/from.d.ts" />
+import 'rxjs/add/operator/filter';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/concat';
+import 'rxjs/add/operator/concatAll';
+import 'rxjs/add/observable/from';
+import 'rxjs/add/observable/of';
+import {Settings} from "../settings/settings.class";
+import {extend} from "../.helper/extend";
+import {Subject, AsyncSubject} from "rxjs/Rx";
+
+var path = require('path');
 
 /**
  * Created by ThomasP on 27.06.2016.
@@ -27,7 +45,6 @@ export class Main implements IMain {
     //
     // file data
     //
-    private $filesDataObservableMap: Map<string, Rx.Observable<string>> = new Map();
     private $files: Array<string> = [];
     //
     // analysers
@@ -43,10 +60,12 @@ export class Main implements IMain {
     }
 
 
-    setSettings(settings: IReportSettings) {
-        this.$settings = settings || {};
+    get settings(): IReportSettings {
+        if (!this.$settings) {
+            this.$settings = new Settings();
+        }
+        return this.$settings;
     }
-
 
     /**
      * add files for main
@@ -106,85 +125,140 @@ export class Main implements IMain {
     }
 
 
-
-    /**
-     *
-     * @param fileName
-     * @param dirName
-     * @returns {Rx.Observable<TResult>}
-     */
-    private fileProcessor<T>(fileName: string, dirName?: string) {
-        //
-        // for absolute and relative file path checking
-        //
+    private initFileProcess<T>(dirName?: string) {
+        let result = new Rx.Subject();
+        let count = this.$files.length;
+        let visitedFiles: Array<string> = [];
+        let settings: IReportSettings = extend({}, this.$settings);
         if (!dirName) {
             dirName = process.cwd();
         }
-        //
-        // check if the file is present @todo make filepath absolute
-        //
+        let rootDir = dirName;
+        // local file stack and settings
+        let fileStack: Subject<string> = new Rx.Subject();
+
+        /**
+         * Processes one file and collect the dependencies
+         * @param file
+         */
+        let processFile = (file: string) => {
+            if (visitedFiles.indexOf(file) !== -1) {
+                count--;
+                return;
+            }
+            visitedFiles.push(file);
+            //
+            // for absolute and relative file path checking
+            //
+            //let dirRelative: string = path.dirname(fileRelative);
+
+            let fileRelative: string = path.relative(rootDir, file);
+            let filePosition: string = path.normalize(path.join(dirName, fileRelative));
+            let dirPosition: string = path.dirname(filePosition);
+
+            let fileObserver: Observable<string> = readFile(filePosition);
+            let parse = this.$parser.parse(fileObserver);
+            let walk = this.$walker.walk(settings, parse);
+            let syntaxRulesObservable = walk;
 
 
-        let fileObserver: Rx.Observable<string> = readFile(fileName);
-        if (this.$filesDataObservableMap.has(fileName)) {
-            return;
-        } else {
-            this.$filesDataObservableMap.set(fileName, fileObserver);
-        }
-        //
-        // This is the result after read file
-        //
-        let parse = this.$parser.parse(fileObserver);
-        let walk = this.$walker.walk(parse);
-        let syntaxRulesObservable = walk;
+            syntaxRulesObservable
+                .filter((d: IWalkerCommand<T>) => d.cmd === WalkerCommand.addDependency)
+                .map((d) => d.data)
+                .subscribe({
+                    next(fileObject: IReportDependencies) {
+                        if (!fileObject ||
+                            !fileObject.path ||
+                            fileObject.path.startsWith('.')=== false ||
+                            fileObject.path.startsWith(path.sep)) {
+                            return;
+                        }
+                        // @todo: make it like CommonJS
+                        let file = fileObject.path + '.js';
+                        let depedencyPosition = path.join(dirPosition, file);
 
-        let dependencies = syntaxRulesObservable
-            .filter((d: IWalkerCommand<T>) => d.cmd === WalkerCommand.addDependency)
-            .map((d) => this.fileProcessor(<string>d.data, dirName));
-
-        return Rx.Observable
-            .fromArray(this.$analysers)
-            .map((analyzer): IAnalyser => analyzer.calculate(syntaxRulesObservable))
-            .concatAll()
-            .concat(dependencies);
+                        fileStack.next(depedencyPosition);
+                        count++;
+                    }
+                });
 
 
+            Rx.Observable
+                .from(this.$analysers)
+                .map((analyzer): IAnalyser => analyzer.calculate(syntaxRulesObservable))
+                .concatAll()
+                .subscribe({
+                    next(next: IReport) {
+                        next.path = file;
+                        next.absolute = filePosition;
+                        next.dir = dirName;
+                        result.next(next);
+
+                    },
+                    error(e) {
+
+                        result.error(e);
+
+                    },
+                    complete() {
+
+                        count--;
+                        console.log('Stack count: ', count);
+                        if (count === 0) {
+                            fileStack.complete();
+                        }
+
+                    }
+                });
+        };
 
 
-        //return syntaxRulesObservable;
+        this.$files.forEach((file) => fileStack.next(file));
+        fileStack.subscribe({
+            next(fileName: string) {
+                processFile(fileName);
+            },
+            error(e) {
+                result.error(e);
+            },
+            complete() {
+                console.log('complete');
+                result.complete();
 
+            }
+        });
+        this.$files.forEach((file) => fileStack.next(file));
+
+        return result;
     }
+
 
     /**
      * Start with walking among the files and build up the report
      */
-    init(): Rx.Observable<IReport> {
+    init(): Observable<IReport> {
         let result = new Rx.Subject();
         let errors = 0;
         if (this.$analysers.length === 0) {
-            result.onError(`There are no analyse tools in the chain, cannot start with reporting.`);
+            result.error(`There are no analyse tools in the chain, cannot start with reporting.`);
             errors++;
         }
         if (this.$files.length === 0) {
-            result.onError(`There are no files selected, cannot start with reporting.`);
+            result.error(`There are no files selected, cannot start with reporting.`);
             errors++;
         }
         if (!this.$walker) {
-            result.onError(`There are no AST walker specified, cannot start with reporting.`);
+            result.error(`There are no AST walker specified, cannot start with reporting.`);
             errors++;
         }
         if (!this.$parser) {
-            result.onError(`There are no parser specified, cannot start with reporting.`);
+            result.error(`There are no parser specified, cannot start with reporting.`);
             errors++;
         }
         if (errors == 0) {
-            Rx.Observable
-                .fromArray(this.$files)
-                .map((fileName: string) => this.fileProcessor(fileName, process.cwd()))
-                .concatAll()
-                .subscribe(result);
+            this.initFileProcess().subscribe(result);
         } else {
-            result.onCompleted();
+            result.completed();
         }
         return result;
     }

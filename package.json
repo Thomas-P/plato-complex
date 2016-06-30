@@ -2,16 +2,18 @@
   "name": "plato-complex",
   "version": "0.0.1",
   "description": "",
-  "main": "index.js",
+  "main": "lib/main/main.class.js",
   "scripts": {
-    "typings": "./node_modules/.bin/typings install ",
+    "typings": "./node_modules/.bin/typings install",
     "tsc": "./node_modules/.bin/tsc",
     "pretest": "npm run typings && npm run tsc",
     "test": "npm run mocha && npm run test:nyc && npm run test:nyc:report npm run colveralls",
     "test:nyc": "./node_modules/.bin/nyc npm run mocha",
     "test:nyc:report": "./node_modules/.bin/nyc report --reporter=text-lcov",
     "mocha": "./node_modules/.bin/mocha --ui tdd --reporter spec --colors --recursive",
-    "coveralls": "npm run test:nyc | ./node_modules/.bin/coveralls"
+    "coveralls": "npm run test:nyc | ./node_modules/.bin/coveralls",
+    "install": "npm run typings && npm run tsc",
+    "demo": "node lib/demo.js"
   },
   "repository": {
     "type": "git",
@@ -25,7 +27,7 @@
   "homepage": "https://github.com/Thomas-P/plato-complex#readme",
   "dependencies": {
     "esprima": "^2.7.2",
-    "rx": "^4.1.0"
+    "rxjs": "^5.0.0-beta.9"
   },
   "devDependencies": {
     "chai": "^3.5.0",

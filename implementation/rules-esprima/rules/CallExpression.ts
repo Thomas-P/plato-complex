@@ -1,10 +1,23 @@
 import {EsPrimaRule} from "../core/rule.class";
 import {IRuleResult} from "../../../lib/.interfaces/rules/rule-result.interface";
 import {getDeepEntry} from "../../../lib/.helper/getDeepEntry";
+import {IReportDependencies} from "../../../lib/.interfaces/report/report.interface";
 
 /**
  * Created by ThomasP on 22.06.2016.
  */
+function getDependency(node: ESTree.CallExpression): IReportDependencies {
+    if (node.callee.type === 'Identifier' && node.callee['name'] === 'require') {
+        let dependency: ESTree.Literal = node.arguments[0];
+        if (dependency.type === 'Literal' && dependency.value) {
+            return {
+                line: Number(getDeepEntry(node, 'loc', 'start', 'line') || 0), //node.loc.start.line,
+                path: <string>dependency.value,
+                type: 'CommonJS'
+            };
+        }
+    }
+}
 
 
 export class CallExpression extends EsPrimaRule {
@@ -12,12 +25,20 @@ export class CallExpression extends EsPrimaRule {
         if (!node) {
             return;
         }
-        return {
+
+
+        let result:IRuleResult<ESTree.Node> = {
             lloc: getDeepEntry(node, 'callee', 'type') === 'FunctionExpression' ? 1 : 0,
             cyclomatic: 0,
             operators: ['()'],
-            nextNodes: this.getNodesToVisit(node, 'arguments', 'callee')
+            nextNodes: this.getNodesToVisit(node, 'arguments', 'callee'),
+        };
+
+        let depend = getDependency(node);
+        if (depend) {
+            result.dependencies = [depend];
         }
+        return result;
     }
 }
 
@@ -72,7 +93,7 @@ function processCommonJsRequire (node) {
     return createDependency(node, resolveRequireDependency(node.arguments[0]), 'CommonJS');
 }
 
-function resolveRequireDependency (dependency, resolver) {
+function resolveRequireDependency (node.arguments[0], resolver) {
     if (dependency.type === 'Literal') {
         if (typeof resolver === 'function') {
             return resolver(dependency.value);

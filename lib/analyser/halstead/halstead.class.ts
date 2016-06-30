@@ -1,13 +1,26 @@
-import {IHalstead, IHalsteadOperatorsAndOperands} from "./halstead.interface";
+import {IHalstead, IHalsteadOperatorsAndOperands, IHalsteadAttributes} from "./halstead.interface";
 /**
  * Created by ThomasP on 22.06.2016.
  */
 
 
 /**
- * Halstead object
+ * Halstead class that implements the Halstead
  */
 export class Halstead implements IHalstead {
+    toJSON():IHalsteadAttributes {
+        return {
+            bugs: this.bugs || 0,
+            difficulty: this.difficulty || 0,
+            effort: this.effort || 0,
+            time: this.time || 0,
+            vocabulary: this.vocabulary,
+            volume: this.volume || 0,
+            length: this.length || 0,
+            operands: this.operands,
+            operators: this.operators,
+        };
+    }
 
 
     bugs:number;
@@ -21,6 +34,7 @@ export class Halstead implements IHalstead {
 
     /**
      * operator object will be created, when it will called
+     * a singleton pattern
      */
     private $operators:IHalsteadOperatorsAndOperands;
     get operators() {
@@ -37,6 +51,7 @@ export class Halstead implements IHalstead {
 
     /**
      * operator object will be created, when it will called
+     * a singleton pattern
      */
     private $operands:IHalsteadOperatorsAndOperands;
     get operands() {
@@ -86,7 +101,5 @@ export class Halstead implements IHalstead {
         this.bugs = this.volume / 3000;
         this.time = this.effort / 18;
     }
-
-
 
 }

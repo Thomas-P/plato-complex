@@ -6,14 +6,19 @@ import {HalsteadReport} from "./halstead-report";
  * Created by ThomasP on 29.06.2016.
  */
 
-let Rx = require('rx');
+
+let Rx = require('rxjs/rx');
+import {Observable} from 'rxjs/Observable';
+import {AsyncSubject} from 'rxjs/AsyncSubject';
+import {Subject} from 'rxjs/Subject';
 
 
 export class HalsteadAnalyser implements IAnalyser {
 
 
     /**
-     *
+     * unused function for now
+     * @todo: check for implementation
      * @param config
      */
     config(config: Object) {
@@ -22,25 +27,25 @@ export class HalsteadAnalyser implements IAnalyser {
 
 
     /**
-     *
+     *  Observable transformer function that get a observable and returns the transformation observable
      * @param s
      */
-    calculate(s: Rx.Observable<IWalkerCommand<ESTree.Node|string>>): Rx.Observable<IReport> {
+    calculate(s: Observable<IWalkerCommand<ESTree.Node|string>>): Observable<IReport> {
         let report: IReport = new HalsteadReport();
         let result = new Rx.Subject();
-        s.subscribe(
-            (c) => {
+        s.subscribe({
+            next(c) {
                 report.processCommands(c)
             },
-            (e) => {
-                result.onError(e)
+            error(e) {
+                result.error(e)
             },
-            () => {
+            complete() {
                 report.finishReport();
-                result.onNext(report);
-                result.onCompleted();
+                result.next(report);
+                result.complete();
             }
-        );
+        });
         return result;
     }
 

@@ -2,40 +2,51 @@
  * Created by ThomasP on 22.06.2016.
  */
 
-export interface IHalstead extends IHalsteadState{
-    /**
-     * @default:
-     */
-    vocabulary: number;
-    /**
-     * @default:
-     */
-    difficulty: number;
-    /**
-     * @default:
-     */
-    volume: number;
-    /**
-     * @default:
-     */
-    effort: number;
-    /**
-     * @default:
-     */
-    bugs: number;
-    /**
-     * @default:
-     */
-    time: number;
-    /**
-     * @default: 0
-     */
-    length: number;
-
+export interface IHalstead extends IHalsteadAttributes{
     /**
      * calculate the metrics
      */
     calculateHalsteadMetrics()
+
+    /**
+     * Create a raw Object with the given attributes
+     */
+    toJSON(): IHalsteadAttributes;
+}
+
+
+/**
+ * These are the Attributes for the halstead metric
+ */
+export interface IHalsteadAttributes extends IHalsteadState {
+    /**
+     * @default: 0
+     */
+    bugs:number;
+    /**
+     * @default: 0
+     */
+    difficulty:number;
+    /**
+     * @default: 0
+     */
+    effort:number;
+    /**
+     * @default: 0
+     */
+    length: number;
+    /**
+     * @default: 0
+     */
+    time:number;
+    /**
+     * @default: 0
+     */
+    vocabulary:number;
+    /**
+     * @default: 0
+     */
+    volume:number;
 }
 
 

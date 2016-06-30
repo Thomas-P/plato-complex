@@ -5,7 +5,9 @@ import {IRuleResult} from "./rule-result.interface";
  */
 
 
-
+/**
+ * Interface for the command pattern implemented as an rule set
+ */
 export interface IRuleSet {
     /**
      * get a rule object from a specified name
@@ -28,5 +30,11 @@ export interface IRuleSet {
      * @param name
      */
     hasRule(name: string): boolean;
+    /**
+     * process a node by the settings and the rules given before
+     * @param node
+     * @param settings
+     * @param assignedName
+     */
     processNode<T, U>(node: T, settings: U, assignedName?: string): IRuleResult<T>;
 }

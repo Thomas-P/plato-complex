@@ -1,7 +1,12 @@
+import {IReportDependencies} from "../report/report.interface";
 /**
  * Created by ThomasP on 25.06.2016.
  */
 
+
+/**
+ * Scope with information for new function scopes
+ */
 export interface IRuleResultScope {
     name: string;
     start: number;
@@ -12,7 +17,8 @@ export interface IRuleResultScope {
 
 export interface IRuleResult<T> {
     /**
-     *
+     * logical complexity
+     * @todo ask why lloc
      */
     lloc:number;
     /**
@@ -38,7 +44,7 @@ export interface IRuleResult<T> {
     /**
      * Dependencies will be implement later
      */
-    dependencies?:any;
+    dependencies?:[IReportDependencies];
     /**
      * give the nodes back that should be visit next.
      * The base class rule have a helper function for this

@@ -1,7 +1,7 @@
 /**
  * Created by ThomasP on 24.06.2016.
  */
-import {IReport, IReportDependencies} from "../.interfaces/report/report.interface";
+import {IReport, IReportDependencies, IReportAttributes} from "../.interfaces/report/report.interface";
 import {
     IFunctionReport, IFunctionReportAttributes,
     ICalculateMetricsResult
@@ -21,6 +21,25 @@ enum Indices {
 }
 
 export class HalsteadReport implements IReport {
+    /**
+     * return a json object, that allows you to safe a clean version
+     * @returns {IReportAttributes}
+     */
+    toJSON():IReportAttributes {
+        return {
+            aggregate: this.aggregate.toJSON(),
+            cyclomatic: this.cyclomatic || 0,
+            dependencies: this.dependencies,
+            effort: this.effort || 0,
+            functions: this.functions.map((func) => func.toJSON()),
+            loc: this.loc || 0,
+            maintainablility: this.maintainablility || 0,
+            params: this.params || 0,
+            path: this.path || '',
+            dir: this.dir || '',
+            absolute: this.absolute || '',
+        };
+    }
     private $functionStack:Array<IFunctionReport> = [];
 
 
@@ -43,8 +62,14 @@ export class HalsteadReport implements IReport {
     cyclomatic:number = 0;
     effort:number = 0;
     params:number = 0;
+    /**
+     * File Parameter
+     */
     path:string;
-
+    absolute:string;
+    dir:string;
+    // report settings 
+    // @todo Process it
     settings:IReportSettings;
 
 
@@ -118,7 +143,7 @@ export class HalsteadReport implements IReport {
 
 
     /**
-     * Leaves a defined function
+     * Leaves a defined function and check if the leave is correct
      * @param name
      */
     private leaveSubFunction(name) {
@@ -133,11 +158,15 @@ export class HalsteadReport implements IReport {
 
 
     /**
-     *
+     * process every node and calculate the sums for logical and cyclomatic complexity
      * @param command
      * @param syntax
      */
     private processNode<T>(syntax:IRuleResult<T>) {
+        /**
+         * Do not copy and paste method, because every update must be run for aggregate and actual report
+         * @param report
+         */
         let process = (report:IFunctionReportAttributes) => {
             report.sloc.logical += syntax.lloc;
             report.cyclomatic += syntax.cyclomatic;
@@ -152,15 +181,15 @@ export class HalsteadReport implements IReport {
 
 
     /**
-     *
+     * public method to process all commands for a file
      * @param command
+     *      single walker command
      */
     processCommands<T>(command:IWalkerCommand<T>) {
         switch (command.cmd) {
             case WalkerCommand.addDependency:
-                //
-                // @todo add dependency
-                //
+                let data: IReportDependencies = <IReportDependencies>command.data;
+                this.addDependency(data.path, data.line, data.type);
                 break;
             case WalkerCommand.visitNode: {
                 let result:IRuleResult<T> = <IRuleResult<T>>command.data;
@@ -225,7 +254,8 @@ export class HalsteadReport implements IReport {
 
 
     /**
-     * Calculate the maintain ability
+     * Calculate the maintain ability as an index
+     * It is a internal function, but allowes to
      * @param averageEffort
      * @param averageCyclomatic
      * @param averageLoc

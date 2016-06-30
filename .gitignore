@@ -52,3 +52,7 @@ implementation/**/*.js*
 .play
 .nyc_output
 run*
+
+#For Demo time
+**/**/metrics.json
+metrics.json
